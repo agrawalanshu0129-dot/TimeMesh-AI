@@ -92,6 +92,17 @@ export default function App() {
     localStorage.removeItem(STORAGE_KEYS.MEMBER);
   };
 
+  const handleUpdateMemberPhoto = (memberId: string, photoUrl?: string) => {
+    const updatedMembers = members.map(member =>
+      member.id === memberId ? { ...member, photoUrl } : member
+    );
+    handleSetMembers(updatedMembers);
+
+    if (currentMember?.id === memberId) {
+      handleSetCurrentMember({ ...currentMember, photoUrl });
+    }
+  };
+
   const isLoggedIn = !!currentMember;
 
   return (
@@ -142,6 +153,7 @@ export default function App() {
                     events={events}
                     conflicts={conflicts}
                     groupName={settings.groupName}
+                    onUpdateMemberPhoto={handleUpdateMemberPhoto}
                   />
                 )
               ) : (
@@ -222,6 +234,7 @@ export default function App() {
                   currentMember={currentMember}
                   members={members}
                   events={events}
+                  onUpdateMemberPhoto={handleUpdateMemberPhoto}
                 />
               ) : (
                 <Navigate to="/onboarding" replace />
@@ -254,6 +267,7 @@ export default function App() {
                   onUpdateSettings={handleUpdateSettings}
                   currentMember={currentMember}
                   onLeaveGroup={handleLeaveGroup}
+                  onUpdateMemberPhoto={handleUpdateMemberPhoto}
                 />
               ) : (
                 <Navigate to="/onboarding" replace />

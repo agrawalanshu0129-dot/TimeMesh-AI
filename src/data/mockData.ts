@@ -7,6 +7,10 @@ const day1 = format(addDays(today, 1), 'yyyy-MM-dd');
 const day2 = format(addDays(today, 2), 'yyyy-MM-dd');
 const day3 = format(addDays(today, 3), 'yyyy-MM-dd');
 const day4 = format(addDays(today, 4), 'yyyy-MM-dd');
+const ALEX_PHOTO =
+  'data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22128%22 height=%22128%22%3E%3Crect width=%22128%22 height=%22128%22 fill=%22%23CFE9D7%22/%3E%3Ccircle cx=%2264%22 cy=%2248%22 r=%2224%22 fill=%22%238AB69A%22/%3E%3Crect x=%2228%22 y=%2282%22 width=%2272%22 height=%2228%22 rx=%2214%22 fill=%22%238AB69A%22/%3E%3C/svg%3E';
+const MAYA_PHOTO =
+  'data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22128%22 height=%22128%22%3E%3Crect width=%22128%22 height=%22128%22 fill=%22%23F7DDEB%22/%3E%3Ccircle cx=%2264%22 cy=%2248%22 r=%2224%22 fill=%22%23CC8BAE%22/%3E%3Crect x=%2228%22 y=%2282%22 width=%2272%22 height=%2228%22 rx=%2214%22 fill=%22%23CC8BAE%22/%3E%3C/svg%3E';
 
 export const mockMembers: Member[] = [
   {
@@ -14,6 +18,7 @@ export const mockMembers: Member[] = [
     name: 'Alex Chen',
     role: 'Owner',
     avatarColor: '#0D9488',
+    photoUrl: ALEX_PHOTO,
     initials: 'AC',
     contributionScore: 60,
     timezone: 'America/Los_Angeles',
@@ -24,6 +29,7 @@ export const mockMembers: Member[] = [
     name: 'Maya Rivera',
     role: 'Co-Owner',
     avatarColor: '#F59E0B',
+    photoUrl: MAYA_PHOTO,
     initials: 'MR',
     contributionScore: 25,
     timezone: 'America/Los_Angeles',

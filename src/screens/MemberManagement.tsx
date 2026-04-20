@@ -140,10 +140,14 @@ export default function MemberManagement({ currentMember, members, events, onUpd
                     <div className="flex items-center gap-3">
                       <div
                         className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                        style={{ backgroundColor: member.avatarColor }}
+                        style={member.photoUrl ? undefined : { backgroundColor: member.avatarColor }}
                         aria-hidden="true"
                       >
-                        {member.initials}
+                        {member.photoUrl ? (
+                          <img src={member.photoUrl} alt={member.name} className="w-full h-full rounded-full object-cover" />
+                        ) : (
+                          member.initials
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">

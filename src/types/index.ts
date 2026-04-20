@@ -15,6 +15,7 @@ export interface Member {
   name: string;
   role: Role;
   avatarColor: string; // hex color
+  photoUrl?: string;
   initials: string;
   contributionScore: number; // 0-100 percentage of coordination tasks this week
   timezone?: string;

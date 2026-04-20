@@ -3,15 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, LogOut, Trash2 } from 'lucide-react';
 import type { GroupSettings, Member } from '../types';
 import RoleGate from '../components/RoleGate';
+import ProfilePhotoUploader from '../components/ProfilePhotoUploader';
 
 interface SettingsProps {
   settings: GroupSettings;
   onUpdateSettings: (settings: GroupSettings) => void;
   currentMember: Member | null;
   onLeaveGroup: () => void;
+  onUpdateMemberPhoto: (memberId: string, photoUrl?: string) => void;
 }
 
-export default function Settings({ settings, onUpdateSettings, currentMember, onLeaveGroup }: SettingsProps) {
+export default function Settings({
+  settings,
+  onUpdateSettings,
+  currentMember,
+  onLeaveGroup,
+  onUpdateMemberPhoto,
+}: SettingsProps) {
   const navigate = useNavigate();
   const [s, setS] = useState<GroupSettings>(settings);
   const [saved, setSaved] = useState(false);
@@ -55,6 +63,22 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
       </div>
 
       <div className="px-4 py-6 pb-32 space-y-6 max-w-lg mx-auto">
+        {/* Profile */}
+        {currentMember && (
+          <section aria-labelledby="profile-photo-heading">
+            <h2 id="profile-photo-heading" className="text-slate-400 text-xs font-body uppercase tracking-wider mb-3">
+              Profile
+            </h2>
+            <ProfilePhotoUploader
+              title="Edit Profile Photo"
+              photoUrl={currentMember.photoUrl}
+              initials={currentMember.initials}
+              avatarColor={currentMember.avatarColor}
+              onSave={photoUrl => onUpdateMemberPhoto(currentMember.id, photoUrl)}
+            />
+          </section>
+        )}
+
         {/* Group Info */}
         <section aria-labelledby="group-settings-heading">
           <h2 id="group-settings-heading" className="text-slate-400 text-xs font-body uppercase tracking-wider mb-3">Group</h2>
