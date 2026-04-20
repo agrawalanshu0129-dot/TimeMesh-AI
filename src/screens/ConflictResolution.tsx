@@ -88,7 +88,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
 
   if (!conflict) {
     return (
-      <div className="min-h-screen bg-navy flex items-center justify-center px-4">
+      <div className="min-h-screen bg-cream flex items-center justify-center px-4">
         <div className="text-center">
           <p className="text-slate-400 font-body">Conflict not found</p>
           <button onClick={() => navigate('/dashboard')} className="mt-4 text-teal-deep font-body text-sm">
@@ -101,7 +101,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
 
   if (resolved) {
     return (
-      <div className="min-h-screen bg-navy flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4">
         <div className="text-center animate-fade-in">
           <div className="w-20 h-20 bg-[#E6F4EA] rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle size={40} className="text-green-400" aria-hidden="true" />
@@ -117,7 +117,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
   const resolutions = conflict.resolutions || [];
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button

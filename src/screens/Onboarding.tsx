@@ -75,7 +75,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
 
   if (view === 'home') {
     return (
-      <div className="min-h-screen bg-navy flex flex-col items-center justify-center px-6 py-12">
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
           {/* Logo */}
           <div className="text-center mb-10">
@@ -126,7 +126,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
 
   if (view === 'create') {
     return (
-      <div className="min-h-screen bg-navy px-6 py-12">
+      <div className="min-h-screen bg-cream px-6 py-12">
         <div className="w-full max-w-sm mx-auto">
           <button
             onClick={() => setView('home')}
@@ -190,7 +190,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
 
   // Join view
   return (
-    <div className="min-h-screen bg-navy px-6 py-12">
+    <div className="min-h-screen bg-cream px-6 py-12">
       <div className="w-full max-w-sm mx-auto">
         <button
           onClick={() => setView('home')}

@@ -108,7 +108,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
   };
 
   return (
-    <div className="flex flex-col h-full bg-navy">
+    <div className="flex flex-col h-full bg-cream">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border-soft">
         <div className="flex items-center gap-3">

@@ -14,7 +14,7 @@ export default function AIAssistant({ messages, onUpdateMessages, events, member
   const navigate = useNavigate();
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-navy">
+    <div className="fixed inset-0 flex flex-col bg-cream">
       <div className="flex items-center gap-3 px-4 pt-12 pb-3 border-b border-border-soft flex-shrink-0">
         <button
           onClick={() => navigate(-1)}

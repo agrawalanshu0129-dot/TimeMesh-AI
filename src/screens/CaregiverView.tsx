@@ -38,7 +38,7 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
   };
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="px-6 pt-14 pb-6">
         <h1 className="font-heading font-bold text-text-primary mb-1" style={{ fontSize: '28px' }}>

@@ -45,7 +45,7 @@ export default function Dashboard({ currentMember, members, events, conflicts, g
   });
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="px-4 pt-12 pb-4">
         <div className="flex items-center justify-between mb-4">
@@ -78,7 +78,7 @@ export default function Dashboard({ currentMember, members, events, conflicts, g
           {members.map(m => (
             <div
               key={m.id}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-text-primary border-2 border-navy"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-text-primary border-2 border-cream"
               style={{ backgroundColor: m.avatarColor }}
               title={m.name}
               aria-label={`${m.name}, ${m.role}`}

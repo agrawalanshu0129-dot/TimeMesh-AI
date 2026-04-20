@@ -114,7 +114,7 @@ export default function MemberManagement({ currentMember, members, events, onUpd
   };
 
   return (
-    <div className="min-h-screen bg-navy text-text-primary">
+    <div className="min-h-screen bg-cream text-text-primary">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
@@ -240,10 +240,11 @@ export default function MemberManagement({ currentMember, members, events, onUpd
                     {/* Actions */}
                     {isOwner && member.id !== currentMember?.id && (
                       <div className="mt-3 space-y-2">
-                        <label className="text-xs font-body text-slate-500 block">
+                        <label htmlFor={`member-role-${member.id}`} className="text-xs font-body text-slate-500 block">
                           Role
                         </label>
                         <select
+                          id={`member-role-${member.id}`}
                           value={member.role}
                           onChange={e => changeRole(member.id, e.target.value as Role)}
                           className="w-full bg-[#F5F5F3] border border-border-soft rounded-lg text-sm text-text-primary px-3 py-2"
@@ -285,7 +286,7 @@ export default function MemberManagement({ currentMember, members, events, onUpd
                     {record.removedMember.name} access removed by {record.removedBy}
                   </p>
                   {record.removedMember.role === 'Caregiver' && (
-                    <p className="text-xs font-body text-[#B63E2E] mt-1">Caregiver access revoked</p>
+                    <p className="text-xs font-body text-[#B63E2E] mt-1">Caregiver access revoked (care responsibility changed)</p>
                   )}
                   <p className="text-xs font-body text-slate-500 mt-1">{record.note}</p>
                   <p className="text-xs font-body text-slate-400 mt-1">

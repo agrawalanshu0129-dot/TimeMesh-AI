@@ -96,7 +96,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="font-body bg-navy min-h-screen">
+      <div className="font-body bg-cream min-h-screen">
         <Routes>
           <Route
             path="/"

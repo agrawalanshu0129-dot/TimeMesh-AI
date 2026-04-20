@@ -7,8 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        white: '#2C2C2C',
-        navy: '#FAFAF8',
+        cream: '#FAFAF8',
         teal: {
           DEFAULT: '#A8D5BA',
           accent: '#9ECAB5',

@@ -121,7 +121,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
   };
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
