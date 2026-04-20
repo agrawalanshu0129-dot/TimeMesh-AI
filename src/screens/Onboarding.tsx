@@ -103,10 +103,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
           {/* Action buttons */}
           <div className="space-y-3">
             <button
-              onClick={() => {
-                setCreatePhotoUrl(undefined);
-                setView('create');
-              }}
+              onClick={() => setView('create')}
               className="w-full bg-teal hover:bg-teal-accent text-white font-semibold font-body py-4 rounded-2xl flex items-center justify-center gap-3 min-h-[56px] transition-colors"
               aria-label="Create a new group"
             >
@@ -114,10 +111,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
               Create a Group
             </button>
             <button
-              onClick={() => {
-                setJoinPhotoUrl(undefined);
-                setView('join');
-              }}
+              onClick={() => setView('join')}
               className="w-full bg-slate-card hover:bg-slate-700 text-white font-semibold font-body py-4 rounded-2xl flex items-center justify-center gap-3 min-h-[56px] border border-slate-600 transition-colors"
               aria-label="Join an existing group"
             >

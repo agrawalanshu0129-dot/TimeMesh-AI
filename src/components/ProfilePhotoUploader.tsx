@@ -3,6 +3,9 @@ import { Camera, Check, Loader2, Trash2, Upload, X } from 'lucide-react';
 
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 const MAX_IMAGE_DIMENSION = 640;
+const IMAGE_COMPRESSION_QUALITY = 0.82;
+const SUCCESS_MESSAGE_DURATION_MS = 1800;
+let cachedWebpSupport: boolean | null = null;
 
 interface ProfilePhotoUploaderProps {
   photoUrl?: string;
@@ -22,6 +25,7 @@ export default function ProfilePhotoUploader({
   compact = false,
 }: ProfilePhotoUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const successTimeoutRef = useRef<number | null>(null);
   const [pendingPhotoUrl, setPendingPhotoUrl] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
@@ -32,6 +36,14 @@ export default function ProfilePhotoUploader({
     setPendingPhotoUrl(undefined);
     setError('');
   }, [photoUrl]);
+
+  useEffect(() => {
+    return () => {
+      if (successTimeoutRef.current) {
+        window.clearTimeout(successTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const previewPhoto = pendingPhotoUrl ?? photoUrl;
   const hasUnsavedChanges = pendingPhotoUrl !== undefined && pendingPhotoUrl !== photoUrl;
@@ -47,8 +59,9 @@ export default function ProfilePhotoUploader({
     try {
       const compressed = await compressImageToDataUrl(file);
       setPendingPhotoUrl(compressed);
-    } catch {
-      setError('Could not read that image. Please try another file.');
+    } catch (err) {
+      console.error('Failed to process selected profile image', { error: err });
+      setError('Failed to process image. Please check the file or try a different browser.');
     } finally {
       setIsLoading(false);
     }
@@ -58,16 +71,22 @@ export default function ProfilePhotoUploader({
     if (!hasUnsavedChanges) return;
     onSave(pendingPhotoUrl);
     setPendingPhotoUrl(undefined);
-    setSuccess(true);
-    window.setTimeout(() => setSuccess(false), 1800);
+    showSuccessMessage();
   };
 
   const handleRemove = () => {
     setPendingPhotoUrl(undefined);
     onSave(undefined);
-    setSuccess(true);
+    showSuccessMessage();
     setError('');
-    window.setTimeout(() => setSuccess(false), 1800);
+  };
+
+  const showSuccessMessage = () => {
+    setSuccess(true);
+    if (successTimeoutRef.current) {
+      window.clearTimeout(successTimeoutRef.current);
+    }
+    successTimeoutRef.current = window.setTimeout(() => setSuccess(false), SUCCESS_MESSAGE_DURATION_MS);
   };
 
   const openFilePicker = () => inputRef.current?.click();
@@ -230,14 +249,22 @@ async function compressImageToDataUrl(file: File): Promise<string> {
 
   const ctx = canvas.getContext('2d');
   if (!ctx) {
-    throw new Error('Canvas not available');
+    throw new Error(
+      'Failed to get 2D canvas context. This can happen when canvas APIs are unavailable.'
+    );
   }
   ctx.drawImage(imageBitmap, 0, 0, width, height);
   imageBitmap.close();
 
-  const webp = canvas.toDataURL('image/webp', 0.82);
-  if (webp.startsWith('data:image/webp')) {
-    return webp;
+  const mimeType = supportsWebp() ? 'image/webp' : 'image/jpeg';
+  return canvas.toDataURL(mimeType, IMAGE_COMPRESSION_QUALITY);
+}
+
+function supportsWebp(): boolean {
+  if (cachedWebpSupport !== null) {
+    return cachedWebpSupport;
   }
-  return canvas.toDataURL('image/jpeg', 0.82);
+  const canvas = document.createElement('canvas');
+  cachedWebpSupport = canvas.toDataURL('image/webp').startsWith('data:image/webp');
+  return cachedWebpSupport;
 }
