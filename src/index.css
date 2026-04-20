@@ -13,9 +13,10 @@
   }
 
   body {
-    background-color: #0D1B2A;
-    color: #FFFFFF;
+    background-color: #FAFAF8;
+    color: #2C2C2C;
     font-family: 'DM Sans', sans-serif;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -35,7 +36,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #DDD9D3;
     border-radius: 2px;
   }
 
@@ -52,7 +53,7 @@
   /* Color inputs */
   input[type="date"],
   input[type="time"] {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   /* Range slider */
@@ -60,7 +61,7 @@
     -webkit-appearance: none;
     height: 6px;
     border-radius: 3px;
-    background: #1E293B;
+    background: #E8E8E6;
     outline: none;
   }
 
@@ -69,7 +70,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #0D9488;
+    background: #A8D5BA;
     cursor: pointer;
   }
 }

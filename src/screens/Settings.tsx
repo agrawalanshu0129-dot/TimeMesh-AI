@@ -43,7 +43,7 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
   return (
     <div className="min-h-screen bg-navy">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-slate-700">
+      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
           onClick={() => navigate(-1)}
           className="w-10 h-10 rounded-full bg-slate-card flex items-center justify-center"
@@ -51,7 +51,7 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
         >
           <ArrowLeft size={18} className="text-slate-400" aria-hidden="true" />
         </button>
-        <h1 className="text-white font-heading font-bold text-lg">Settings</h1>
+        <h1 className="text-text-primary font-heading font-bold text-lg">Settings</h1>
       </div>
 
       <div className="px-4 py-6 pb-32 space-y-6 max-w-lg mx-auto">
@@ -68,7 +68,7 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
                 type="text"
                 value={s.groupName}
                 onChange={e => update({ groupName: e.target.value })}
-                className="w-full bg-slate-700 text-white font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+                className="w-full bg-[#F5F5F3] text-text-primary font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
               />
             </div>
             <div>
@@ -80,8 +80,8 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
                     onClick={() => update({ groupType: type })}
                     className={`py-2.5 rounded-xl text-sm font-body border min-h-[44px] transition-colors ${
                       s.groupType === type
-                        ? 'bg-teal text-white border-teal'
-                        : 'bg-slate-700 text-slate-400 border-slate-600'
+                        ? 'bg-teal text-text-primary border-teal'
+                        : 'bg-[#F5F5F3] text-slate-400 border-border-soft'
                     }`}
                     aria-pressed={s.groupType === type}
                   >
@@ -118,8 +118,8 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
                     onClick={() => toggleNotif('reminders', opt)}
                     className={`py-2 rounded-xl text-xs font-body border min-h-[36px] transition-colors ${
                       s.notifications.reminders === opt
-                        ? 'bg-teal text-white border-teal'
-                        : 'bg-slate-700 text-slate-400 border-slate-600'
+                        ? 'bg-teal text-text-primary border-teal'
+                        : 'bg-[#F5F5F3] text-slate-400 border-border-soft'
                     }`}
                     aria-pressed={s.notifications.reminders === opt}
                   >
@@ -151,8 +151,8 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
                   onClick={() => update({ language: lang })}
                   className={`py-2.5 rounded-xl text-sm font-body border min-h-[44px] transition-colors ${
                     s.language === lang
-                      ? 'bg-teal text-white border-teal'
-                      : 'bg-slate-700 text-slate-400 border-slate-600'
+                      ? 'bg-teal text-text-primary border-teal'
+                      : 'bg-[#F5F5F3] text-slate-400 border-border-soft'
                   }`}
                   aria-pressed={s.language === lang}
                 >
@@ -189,7 +189,7 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
             <div className="flex items-start gap-3">
               <span className="text-2xl" aria-hidden="true">🔒</span>
               <div>
-                <p className="text-white font-body text-sm font-semibold">Your data stays private</p>
+                <p className="text-text-primary font-body text-sm font-semibold">Your data stays private</p>
                 <p className="text-slate-400 font-body text-xs mt-1 leading-relaxed">
                   We never sell your data. All calendar data is stored locally on your device. AI queries are processed securely and never stored.
                 </p>
@@ -201,10 +201,10 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
         {/* Danger Zone */}
         <section aria-labelledby="danger-heading">
           <h2 id="danger-heading" className="text-slate-400 text-xs font-body uppercase tracking-wider mb-3">Danger Zone</h2>
-          <div className="bg-red-900/20 border border-red-500/30 rounded-2xl p-4 space-y-3">
+          <div className="bg-[#FFF3F0] border border-[#F3B9AD] rounded-2xl p-4 space-y-3">
             <button
               onClick={onLeaveGroup}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-red-900/40 text-red-400 text-sm font-body font-semibold min-h-[48px]"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FFECE7] text-[#B63E2E] text-sm font-body font-semibold min-h-[48px] border border-[#F3B9AD]"
               aria-label="Leave group"
             >
               <LogOut size={16} aria-hidden="true" />
@@ -217,7 +217,7 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
                     onLeaveGroup();
                   }
                 }}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-red-600 text-white text-sm font-body font-semibold min-h-[48px]"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#F7C4BA] text-[#B63E2E] text-sm font-body font-semibold min-h-[48px]"
                 aria-label="Delete group permanently"
               >
                 <Trash2 size={16} aria-hidden="true" />
@@ -232,10 +232,10 @@ export default function Settings({ settings, onUpdateSettings, currentMember, on
       </div>
 
       {/* Save */}
-      <div className="fixed bottom-0 left-0 right-0 px-4 pb-6 pt-3 bg-navy/90 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 px-4 pb-6 pt-3 bg-[#FAFAF8]/95 backdrop-blur-sm">
         <button
           onClick={handleSave}
-          className="w-full bg-teal hover:bg-teal-accent text-white font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
+          className="w-full bg-teal hover:bg-teal-accent text-text-primary font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
         >
           {saved ? '✓ Saved!' : 'Save Settings'}
         </button>
@@ -253,7 +253,7 @@ function ToggleRow({ label, description, checked, onToggle }: {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="flex-1">
-        <p className="text-white font-body text-sm font-semibold">{label}</p>
+        <p className="text-text-primary font-body text-sm font-semibold">{label}</p>
         <p className="text-slate-500 font-body text-xs mt-0.5">{description}</p>
       </div>
       <button
@@ -278,12 +278,12 @@ function SyncRow({ icon, label }: { icon: string; label: string }) {
     <div className="flex items-center justify-between gap-3">
       <div className="flex items-center gap-2">
         <span className="text-xl" aria-hidden="true">{icon}</span>
-        <span className="text-white font-body text-sm">{label}</span>
+        <span className="text-text-primary font-body text-sm">{label}</span>
       </div>
       <button
         onClick={() => setConnected(!connected)}
         className={`text-xs font-body px-3 py-2 rounded-lg min-h-[36px] transition-colors ${
-          connected ? 'bg-green-500/20 text-green-400' : 'bg-slate-700 text-slate-400'
+          connected ? 'bg-green-500/20 text-green-400' : 'bg-[#F5F5F3] text-slate-400'
         }`}
         aria-label={`${connected ? 'Disconnect' : 'Connect'} ${label}`}
       >

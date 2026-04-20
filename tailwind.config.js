@@ -7,16 +7,39 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: '#0D1B2A',
+        white: '#2C2C2C',
+        navy: '#FAFAF8',
         teal: {
-          DEFAULT: '#0D9488',
-          accent: '#14B8A6',
+          DEFAULT: '#A8D5BA',
+          accent: '#9ECAB5',
+          deep: '#7FB49A',
         },
-        gold: '#F59E0B',
+        coral: {
+          DEFAULT: '#FFB8A3',
+          accent: '#FFA89D',
+        },
+        lavender: {
+          DEFAULT: '#D4B5E8',
+          accent: '#E0C9F0',
+        },
+        gold: '#E8D39B',
         slate: {
-          card: '#1E293B',
+          300: '#4A4A4A',
+          400: '#5A5A5A',
+          500: '#767676',
+          600: '#8A8A8A',
+          700: '#ECEBE7',
+          card: '#FFFFFF',
         },
-        muted: '#64748B',
+        muted: '#DDD9D3',
+        text: {
+          primary: '#2C2C2C',
+          secondary: '#4A4A4A',
+        },
+        border: {
+          soft: '#E8E8E6',
+          muted: '#DDD9D3',
+        },
       },
       fontFamily: {
         heading: ['Fraunces', 'serif'],

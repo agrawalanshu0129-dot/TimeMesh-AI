@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Phone, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import type { CalendarEvent, Member } from '../types';
 
 interface CaregiverViewProps {
@@ -38,13 +38,13 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0D2B2B' }}>
+    <div className="min-h-screen bg-navy">
       {/* Header */}
       <div className="px-6 pt-14 pb-6">
-        <h1 className="font-heading font-bold text-white mb-1" style={{ fontSize: '28px' }}>
+        <h1 className="font-heading font-bold text-text-primary mb-1" style={{ fontSize: '28px' }}>
           Hello, {currentMember.name.split(' ')[0]}! 👋
         </h1>
-        <p className="font-body text-teal-accent" style={{ fontSize: '18px' }}>
+        <p className="font-body text-teal-deep" style={{ fontSize: '18px' }}>
           {format(new Date(), 'EEEE, MMMM d')}
         </p>
       </div>
@@ -68,16 +68,16 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
               return (
                 <div
                   key={event.id}
-                  className="bg-slate-card rounded-3xl p-5"
+                  className="bg-slate-card border border-border-soft rounded-3xl p-5"
                   role="article"
                   aria-label={`${event.title}, ${event.startTime} to ${event.endTime}`}
                 >
-                  <h3 className="text-white font-heading font-bold mb-2" style={{ fontSize: '22px' }}>
+                  <h3 className="text-text-primary font-heading font-bold mb-2" style={{ fontSize: '22px' }}>
                     {event.title}
                   </h3>
                   <div className="flex items-center gap-3 mb-2">
-                    <Clock size={18} className="text-teal-accent flex-shrink-0" aria-hidden="true" />
-                    <span className="text-teal-accent font-body" style={{ fontSize: '18px' }}>
+                    <Clock size={18} className="text-teal-deep flex-shrink-0" aria-hidden="true" />
+                    <span className="text-teal-deep font-body" style={{ fontSize: '18px' }}>
                       {event.startTime} — {event.endTime}
                     </span>
                   </div>
@@ -89,7 +89,7 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
                   {owner && owner.id !== currentMember.id && (
                     <div className="flex items-center gap-2 mt-3">
                       <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-text-primary"
                         style={{ backgroundColor: owner.avatarColor }}
                         aria-hidden="true"
                       >
@@ -114,9 +114,9 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
           onClick={handlePickupConfirm}
           disabled={pickupConfirmed}
           className={`w-full rounded-3xl py-5 flex items-center justify-center gap-3 font-body font-bold transition-colors ${
-            pickupConfirmed
-              ? 'bg-green-700 text-green-200'
-              : 'bg-teal text-white active:bg-teal-accent'
+              pickupConfirmed
+                ? 'bg-[#E6F4EA] text-green-700'
+                : 'bg-teal text-text-primary active:bg-teal-accent'
           }`}
           style={{ fontSize: '20px', minHeight: '72px' }}
           aria-label={pickupConfirmed ? 'Pickup confirmed' : 'Confirm pickup'}
@@ -130,9 +130,9 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
           onClick={handleLateAlert}
           disabled={lateAlertSent}
           className={`w-full rounded-3xl py-5 flex items-center justify-center gap-3 font-body font-bold transition-colors ${
-            lateAlertSent
-              ? 'bg-slate-700 text-slate-400'
-              : 'bg-amber-600 text-white active:bg-amber-700'
+              lateAlertSent
+                ? 'bg-[#F5F5F3] text-slate-400'
+                : 'bg-coral text-text-primary active:bg-coral-accent'
           }`}
           style={{ fontSize: '20px', minHeight: '72px' }}
           aria-label={lateAlertSent ? 'Late alert sent' : 'Alert owners you are running late'}
@@ -144,7 +144,7 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
         {/* Emergency contact */}
         <a
           href={`tel:${emergencyPhone.replace(/\D/g, '')}`}
-          className="w-full rounded-3xl py-5 bg-red-700 text-white flex items-center justify-center gap-3 font-body font-bold active:bg-red-800"
+          className="w-full rounded-3xl py-5 bg-[#FFECE7] border border-[#F3B9AD] text-[#B63E2E] flex items-center justify-center gap-3 font-body font-bold"
           style={{ fontSize: '20px', minHeight: '72px' }}
           aria-label={`Call emergency contact ${primaryOwner?.name || 'Owner'}`}
         >
@@ -155,15 +155,15 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
 
       {/* Status messages */}
       {pickupConfirmed && (
-        <div className="mx-6 bg-green-900/40 border border-green-600/50 rounded-2xl p-4 mb-4">
-          <p className="text-green-300 font-body text-center" style={{ fontSize: '16px' }}>
+        <div className="mx-6 bg-[#E6F4EA] border border-[#BFDCC9] rounded-2xl p-4 mb-4">
+          <p className="text-green-700 font-body text-center" style={{ fontSize: '16px' }}>
             ✅ {owners.map(o => o.name.split(' ')[0]).join(' & ')} have been notified!
           </p>
         </div>
       )}
       {lateAlertSent && (
-        <div className="mx-6 bg-amber-900/40 border border-amber-600/50 rounded-2xl p-4 mb-4">
-          <p className="text-amber-300 font-body text-center" style={{ fontSize: '16px' }}>
+        <div className="mx-6 bg-[#FFF6E8] border border-[#F3D4A6] rounded-2xl p-4 mb-4">
+          <p className="text-[#A56A00] font-body text-center" style={{ fontSize: '16px' }}>
             📱 Running late alert sent to the group!
           </p>
         </div>

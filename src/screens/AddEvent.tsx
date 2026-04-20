@@ -123,7 +123,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
   return (
     <div className="min-h-screen bg-navy">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-slate-700">
+      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
           onClick={() => navigate(-1)}
           className="w-10 h-10 rounded-full bg-slate-card flex items-center justify-center"
@@ -131,7 +131,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
         >
           <ArrowLeft size={18} className="text-slate-400" aria-hidden="true" />
         </button>
-        <h1 className="text-white font-heading font-bold text-lg">
+        <h1 className="text-text-primary font-heading font-bold text-lg">
           {existingEvent ? 'Edit Event' : 'New Event'}
         </h1>
       </div>
@@ -148,7 +148,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="e.g. Soccer Practice, Board Meeting"
-            className="w-full bg-slate-card text-white placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+            className="w-full bg-slate-card text-text-primary placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
             aria-required="true"
           />
         </div>
@@ -162,7 +162,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 key={cat}
                 onClick={() => setCategory(cat)}
                 className={`px-3 py-2 rounded-xl text-xs font-body font-semibold border transition-colors min-h-[36px] ${
-                  category === cat ? CATEGORY_COLORS[cat] : 'bg-slate-card text-slate-400 border-slate-600'
+                  category === cat ? CATEGORY_COLORS[cat] : 'bg-slate-card text-slate-400 border-border-soft'
                 }`}
                 aria-pressed={category === cat}
                 aria-label={`Category: ${cat}`}
@@ -184,7 +184,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
               value={ownerId}
               onChange={e => setOwnerId(e.target.value)}
               disabled={!canEditOwner}
-              className="w-full bg-slate-card text-white font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 appearance-none min-h-[48px] disabled:opacity-60"
+              className="w-full bg-slate-card text-text-primary font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 appearance-none min-h-[48px] disabled:opacity-60"
             >
               {(canEditOwner ? members : members.filter(m => m.id === currentMember?.id)).map(m => (
                 <option key={m.id} value={m.id}>{m.name} ({m.role})</option>
@@ -203,7 +203,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 type="date"
                 value={date}
                 onChange={e => setDate(e.target.value)}
-                className="w-full bg-slate-card text-white font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+                className="w-full bg-slate-card text-text-primary font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
                 aria-label="Event date"
               />
             </div>
@@ -213,7 +213,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 type="time"
                 value={startTime}
                 onChange={e => setStartTime(e.target.value)}
-                className="w-full bg-slate-card text-white font-body rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+                className="w-full bg-slate-card text-text-primary font-body rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
                 aria-label="Start time"
               />
             </div>
@@ -223,7 +223,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 type="time"
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
-                className="w-full bg-slate-card text-white font-body rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+                className="w-full bg-slate-card text-text-primary font-body rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
                 aria-label="End time"
               />
             </div>
@@ -233,7 +233,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 <select
                   value={repeat}
                   onChange={e => setRepeat(e.target.value as RepeatType)}
-                  className="w-full bg-slate-card text-white font-body rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-teal-500 appearance-none min-h-[48px] text-xs"
+                  className="w-full bg-slate-card text-text-primary font-body rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-teal-500 appearance-none min-h-[48px] text-xs"
                   aria-label="Repeat frequency"
                 >
                   {REPEATS.map(r => <option key={r} value={r}>{r}</option>)}
@@ -255,7 +255,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
             value={location}
             onChange={e => setLocation(e.target.value)}
             placeholder="Add address for traffic alerts"
-            className="w-full bg-slate-card text-white placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+            className="w-full bg-slate-card text-text-primary placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
           />
         </div>
 
@@ -268,7 +268,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
             onChange={e => setNotes(e.target.value)}
             placeholder="Optional notes..."
             rows={3}
-            className="w-full bg-slate-card text-white placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            className="w-full bg-slate-card text-text-primary placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
         </div>
 
@@ -282,8 +282,8 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 onClick={() => setVisibility(v)}
                 className={`px-3 py-2 rounded-xl text-xs font-body border min-h-[36px] transition-colors ${
                   visibility === v
-                    ? 'bg-teal text-white border-teal'
-                    : 'bg-slate-card text-slate-400 border-slate-600'
+                    ? 'bg-teal text-text-primary border-teal'
+                    : 'bg-slate-card text-slate-400 border-border-soft'
                 }`}
                 aria-pressed={visibility === v}
               >
@@ -303,14 +303,14 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 onClick={() => toggleInvite(m.id)}
                 className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-colors min-h-[52px] ${
                   invitedMemberIds.includes(m.id)
-                    ? 'bg-teal/10 border-teal text-white'
-                    : 'bg-slate-card border-slate-600 text-slate-400'
+                    ? 'bg-teal/10 border-teal text-text-primary'
+                    : 'bg-slate-card border-border-soft text-slate-400'
                 }`}
                 aria-pressed={invitedMemberIds.includes(m.id)}
                 aria-label={`${invitedMemberIds.includes(m.id) ? 'Remove' : 'Invite'} ${m.name}`}
               >
                 <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-text-primary"
                   style={{ backgroundColor: m.avatarColor }}
                   aria-hidden="true"
                 >
@@ -327,33 +327,33 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
 
         {/* Conflict warning */}
         {conflictWarning && (
-          <div className="bg-red-900/40 border border-red-500/50 rounded-xl p-3">
-            <p className="text-red-300 text-sm font-body">{conflictWarning}</p>
+          <div className="bg-[#FFECE7] border border-[#F3B9AD] rounded-xl p-3">
+            <p className="text-[#B63E2E] text-sm font-body">{conflictWarning}</p>
           </div>
         )}
 
         {/* AI response */}
         {aiResponse && (
-          <div className="bg-teal/10 border border-teal/30 rounded-xl p-3">
-            <p className="text-teal-accent text-xs font-body mb-1">🤖 AI Check</p>
-            <p className="text-slate-200 text-sm font-body leading-relaxed whitespace-pre-wrap">{aiResponse}</p>
+          <div className="bg-[#EEF9F1] border border-[#C8E7D4] rounded-xl p-3">
+            <p className="text-teal-deep text-xs font-body mb-1">🤖 AI Check</p>
+            <p className="text-text-secondary text-sm font-body leading-relaxed whitespace-pre-wrap">{aiResponse}</p>
           </div>
         )}
       </div>
 
       {/* Toast */}
       {toast && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-teal text-white text-sm font-body px-6 py-3 rounded-full shadow-lg z-50 animate-fade-in">
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-teal text-text-primary text-sm font-body px-6 py-3 rounded-full shadow-lg z-50 animate-fade-in">
           {toast}
         </div>
       )}
 
       {/* Save button */}
-      <div className="fixed bottom-0 left-0 right-0 px-4 pb-6 pt-3 bg-navy/90 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 px-4 pb-6 pt-3 bg-[#FAFAF8]/95 backdrop-blur-sm">
         <button
           onClick={handleSave}
           disabled={!title.trim() || isLoading}
-          className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-white font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
+          className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-text-primary font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
         >
           {isLoading ? 'Checking with AI...' : existingEvent ? 'Save Changes' : 'Add Event'}
         </button>

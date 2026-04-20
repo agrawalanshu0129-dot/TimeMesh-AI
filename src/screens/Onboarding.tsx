@@ -82,8 +82,8 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-teal/20 border border-teal/30 mb-4">
               <span className="text-4xl" aria-hidden="true">🗓️</span>
             </div>
-            <h1 className="text-4xl font-heading font-bold text-white mb-2">TimeMesh AI</h1>
-            <p className="text-teal-accent font-body text-base">
+            <h1 className="text-4xl font-heading font-bold text-text-primary mb-2">TimeMesh AI</h1>
+            <p className="text-teal-deep font-body text-base">
               Smart coordination for families & groups
             </p>
           </div>
@@ -99,7 +99,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
           <div className="space-y-3">
             <button
               onClick={() => setView('create')}
-              className="w-full bg-teal hover:bg-teal-accent text-white font-semibold font-body py-4 rounded-2xl flex items-center justify-center gap-3 min-h-[56px] transition-colors"
+              className="w-full bg-teal hover:bg-teal-accent text-text-primary font-semibold font-body py-4 rounded-2xl flex items-center justify-center gap-3 min-h-[56px] transition-colors"
               aria-label="Create a new group"
             >
               <Plus size={20} aria-hidden="true" />
@@ -107,7 +107,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
             </button>
             <button
               onClick={() => setView('join')}
-              className="w-full bg-slate-card hover:bg-slate-700 text-white font-semibold font-body py-4 rounded-2xl flex items-center justify-center gap-3 min-h-[56px] border border-slate-600 transition-colors"
+              className="w-full bg-slate-card hover:bg-[#F5F5F3] text-text-primary font-semibold font-body py-4 rounded-2xl flex items-center justify-center gap-3 min-h-[56px] border border-border-soft transition-colors"
               aria-label="Join an existing group"
             >
               <LogIn size={20} aria-hidden="true" />
@@ -136,7 +136,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
             ← Back
           </button>
 
-          <h2 className="text-2xl font-heading font-bold text-white mb-2">Create Your Group</h2>
+          <h2 className="text-2xl font-heading font-bold text-text-primary mb-2">Create Your Group</h2>
           <p className="text-slate-400 font-body text-sm mb-8">Set up your family or group calendar.</p>
 
           <div className="space-y-4">
@@ -150,7 +150,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="e.g. Alex Chen"
-                className="w-full bg-slate-card text-white placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+                className="w-full bg-slate-card text-text-primary placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
                 aria-required="true"
               />
             </div>
@@ -165,20 +165,20 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
                 value={groupName}
                 onChange={e => setGroupName(e.target.value)}
                 placeholder="e.g. The Chen Family"
-                className="w-full bg-slate-card text-white placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+                className="w-full bg-slate-card text-text-primary placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
               />
             </div>
 
             <div className="bg-slate-card rounded-xl p-3">
               <p className="text-slate-400 text-xs font-body">
-                👑 You'll be the <strong className="text-teal-accent">Owner</strong> — full access to all features.
+                👑 You'll be the <strong className="text-teal-deep">Owner</strong> — full access to all features.
               </p>
             </div>
 
             <button
               onClick={handleCreate}
               disabled={!name.trim()}
-              className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-white font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
+              className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-text-primary font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
             >
               Create Group
             </button>
@@ -200,7 +200,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
           ← Back
         </button>
 
-        <h2 className="text-2xl font-heading font-bold text-white mb-2">Join a Group</h2>
+        <h2 className="text-2xl font-heading font-bold text-text-primary mb-2">Join a Group</h2>
         <p className="text-slate-400 font-body text-sm mb-6">Select your profile or create a new one.</p>
 
         {/* Existing members */}
@@ -215,21 +215,21 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
                 <button
                   key={member.id}
                   onClick={() => handleJoin(member)}
-                  className="w-full bg-slate-card hover:bg-slate-700 rounded-xl p-4 flex items-center gap-3 transition-colors min-h-[64px]"
+                  className="w-full bg-slate-card hover:bg-[#F5F5F3] rounded-xl p-4 flex items-center gap-3 transition-colors min-h-[64px]"
                   aria-label={`Join as ${member.name}, ${member.role}`}
                 >
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-text-primary flex-shrink-0"
                     style={{ backgroundColor: member.avatarColor }}
                     aria-hidden="true"
                   >
                     {member.initials}
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-white font-semibold font-body text-sm">{member.name}</p>
+                    <p className="text-text-primary font-semibold font-body text-sm">{member.name}</p>
                     <p className="text-slate-400 text-xs font-body">{member.role}</p>
                   </div>
-                  <span className="text-teal-accent text-xs font-body">Select →</span>
+                  <span className="text-teal-deep text-xs font-body">Select →</span>
                 </button>
               ))}
             </div>
@@ -237,7 +237,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
         )}
 
         {/* New member */}
-        <div className="border-t border-slate-700 pt-6">
+        <div className="border-t border-border-soft pt-6">
           <h3 className="text-slate-400 text-xs font-body uppercase tracking-wider mb-3">New Member</h3>
           <div className="space-y-3">
             <input
@@ -245,7 +245,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Your name"
-              className="w-full bg-slate-card text-white placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
+              className="w-full bg-slate-card text-text-primary placeholder-slate-500 font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[48px]"
               aria-label="Your name"
             />
             <div>
@@ -257,8 +257,8 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
                     onClick={() => setRole(r)}
                     className={`py-2.5 rounded-xl text-sm font-body font-medium transition-colors min-h-[44px] ${
                       role === r
-                        ? 'bg-teal text-white'
-                        : 'bg-slate-card text-slate-400 border border-slate-600'
+                        ? 'bg-teal text-text-primary'
+                        : 'bg-slate-card text-slate-400 border border-border-soft'
                     }`}
                     aria-pressed={role === r}
                     aria-label={`Select role: ${r}`}
@@ -271,7 +271,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
             <button
               onClick={handleNewJoin}
               disabled={!name.trim()}
-              className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-white font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
+              className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-text-primary font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
             >
               Join Group
             </button>

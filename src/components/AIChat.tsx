@@ -110,14 +110,14 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
   return (
     <div className="flex flex-col h-full bg-navy">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-slate-700">
+      <div className="flex items-center justify-between p-4 border-b border-border-soft">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-teal rounded-full flex items-center justify-center">
-            <Bot size={18} className="text-white" aria-hidden="true" />
+            <Bot size={18} className="text-text-primary" aria-hidden="true" />
           </div>
           <div>
-            <h2 className="text-white font-semibold font-heading text-base">TimeMesh AI</h2>
-            <p className="text-teal-accent text-xs font-body">Your scheduling assistant</p>
+            <h2 className="text-text-primary font-semibold font-heading text-base">TimeMesh AI</h2>
+            <p className="text-teal-deep text-xs font-body">Your scheduling assistant</p>
           </div>
         </div>
         {onClose && (
@@ -138,7 +138,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
             <div className="w-16 h-16 bg-teal/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Bot size={32} className="text-teal" aria-hidden="true" />
             </div>
-            <h3 className="text-white font-heading text-lg mb-2">Hi! I'm TimeMesh AI 👋</h3>
+            <h3 className="text-text-primary font-heading text-lg mb-2">Hi! I'm TimeMesh AI 👋</h3>
             <p className="text-slate-400 text-sm font-body mb-6 leading-relaxed">
               I can help you spot conflicts, find free time, and plan group events. What do you need?
             </p>
@@ -147,7 +147,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
                 <button
                   key={prompt}
                   onClick={() => handleSend(prompt)}
-                  className="bg-slate-card hover:bg-slate-700 text-slate-300 text-sm font-body py-3 px-4 rounded-xl text-left transition-colors min-h-[44px]"
+                  className="bg-slate-card hover:bg-[#F5F5F3] text-slate-300 text-sm font-body py-3 px-4 rounded-xl text-left transition-colors min-h-[44px]"
                   aria-label={`Suggested prompt: ${prompt}`}
                 >
                   {prompt}
@@ -164,13 +164,13 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
           >
             {msg.role === 'assistant' && (
               <div className="w-7 h-7 bg-teal rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-1">
-                <Bot size={14} className="text-white" aria-hidden="true" />
+                <Bot size={14} className="text-text-primary" aria-hidden="true" />
               </div>
             )}
             <div
               className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm font-body leading-relaxed whitespace-pre-wrap ${
                 msg.role === 'user'
-                  ? 'bg-teal text-white rounded-br-sm'
+                  ? 'bg-teal text-text-primary rounded-br-sm'
                   : 'bg-slate-card text-slate-200 rounded-bl-sm'
               }`}
               aria-label={`${msg.role === 'user' ? 'You' : 'TimeMesh AI'}: ${msg.content}`}
@@ -183,7 +183,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
         {isLoading && (
           <div className="flex justify-start">
             <div className="w-7 h-7 bg-teal rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-1">
-              <Bot size={14} className="text-white" aria-hidden="true" />
+              <Bot size={14} className="text-text-primary" aria-hidden="true" />
             </div>
             <div className="bg-slate-card rounded-2xl rounded-bl-sm px-4 py-3" aria-live="polite" aria-label="TimeMesh AI is typing">
               <div className="flex gap-1">
@@ -205,7 +205,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
             <button
               key={prompt}
               onClick={() => handleSend(prompt)}
-              className="flex-shrink-0 bg-slate-card text-teal-accent text-xs font-body px-3 py-2 rounded-full border border-teal-500/30 whitespace-nowrap min-h-[36px]"
+              className="flex-shrink-0 bg-slate-card text-teal-deep text-xs font-body px-3 py-2 rounded-full border border-teal-500/30 whitespace-nowrap min-h-[36px]"
               aria-label={`Quick prompt: ${prompt}`}
             >
               {prompt}
@@ -215,12 +215,12 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
       )}
 
       {/* Input */}
-      <div className="p-4 border-t border-slate-700">
+      <div className="p-4 border-t border-border-soft">
         <div className="flex gap-2 items-end">
           <button
             onClick={toggleVoice}
             className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
-              isListening ? 'bg-red-500 text-white' : 'bg-slate-card text-slate-400'
+              isListening ? 'bg-red-500 text-text-primary' : 'bg-slate-card text-slate-400'
             }`}
             aria-label={isListening ? 'Stop voice input' : 'Start voice input'}
           >
@@ -233,7 +233,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && handleSend()}
             placeholder={isListening ? 'Listening...' : 'Ask about your schedule...'}
-            className="flex-1 bg-slate-card text-white placeholder-slate-400 text-sm font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[44px]"
+            className="flex-1 bg-slate-card text-text-primary placeholder-slate-400 text-sm font-body rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 min-h-[44px]"
             disabled={isListening}
             aria-label="Message input"
           />
@@ -243,7 +243,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
             className="w-11 h-11 rounded-full bg-teal flex items-center justify-center flex-shrink-0 disabled:opacity-40 transition-opacity"
             aria-label="Send message"
           >
-            <Send size={18} className="text-white" aria-hidden="true" />
+            <Send size={18} className="text-text-primary" aria-hidden="true" />
           </button>
         </div>
       </div>
