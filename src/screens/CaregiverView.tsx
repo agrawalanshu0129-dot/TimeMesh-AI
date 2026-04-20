@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { Phone, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import type { CalendarEvent, Member } from '../types';
+import ProfilePhotoUploader from '../components/ProfilePhotoUploader';
 
 interface CaregiverViewProps {
   currentMember: Member;
   members: Member[];
   events: CalendarEvent[];
+  onUpdateMemberPhoto: (memberId: string, photoUrl?: string) => void;
 }
 
-export default function CaregiverView({ currentMember, members, events }: CaregiverViewProps) {
+export default function CaregiverView({ currentMember, members, events, onUpdateMemberPhoto }: CaregiverViewProps) {
   const [pickupConfirmed, setPickupConfirmed] = useState(false);
   const [lateAlertSent, setLateAlertSent] = useState(false);
 
@@ -47,6 +49,15 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
         <p className="font-body text-teal-accent" style={{ fontSize: '18px' }}>
           {format(new Date(), 'EEEE, MMMM d')}
         </p>
+        <div className="mt-4 max-w-sm">
+          <ProfilePhotoUploader
+            photoUrl={currentMember.photoUrl}
+            initials={currentMember.initials}
+            avatarColor={currentMember.avatarColor}
+            onSave={photoUrl => onUpdateMemberPhoto(currentMember.id, photoUrl)}
+            title="Edit Profile Photo"
+          />
+        </div>
       </div>
 
       {/* Today's events */}
@@ -90,10 +101,14 @@ export default function CaregiverView({ currentMember, members, events }: Caregi
                     <div className="flex items-center gap-2 mt-3">
                       <div
                         className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white"
-                        style={{ backgroundColor: owner.avatarColor }}
+                        style={owner.photoUrl ? undefined : { backgroundColor: owner.avatarColor }}
                         aria-hidden="true"
                       >
-                        {owner.initials}
+                        {owner.photoUrl ? (
+                          <img src={owner.photoUrl} alt={owner.name} className="w-full h-full rounded-full object-cover" />
+                        ) : (
+                          owner.initials
+                        )}
                       </div>
                       <span className="text-slate-400 font-body" style={{ fontSize: '15px' }}>
                         Organized by {owner.name}

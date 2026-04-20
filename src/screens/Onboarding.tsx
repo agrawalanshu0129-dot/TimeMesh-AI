@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Users, Plus, LogIn } from 'lucide-react';
 import type { Member, Role, GroupSettings } from '../types';
+import ProfilePhotoUploader from '../components/ProfilePhotoUploader';
 
 const ROLES: Role[] = ['Owner', 'Co-Owner', 'Member', 'Caregiver'];
 
@@ -29,6 +30,8 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
   const [name, setName] = useState('');
   const [role, setRole] = useState<Role>('Member');
   const [groupName, setGroupName] = useState(settings.groupName);
+  const [createPhotoUrl, setCreatePhotoUrl] = useState<string | undefined>();
+  const [joinPhotoUrl, setJoinPhotoUrl] = useState<string | undefined>();
 
   const handleCreate = () => {
     if (!name.trim()) return;
@@ -37,6 +40,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
       name: name.trim(),
       role: 'Owner',
       avatarColor: AVATAR_COLORS[existingMembers.length % AVATAR_COLORS.length],
+      photoUrl: createPhotoUrl,
       initials: getInitials(name.trim()),
       contributionScore: 50,
     };
@@ -62,6 +66,7 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
       name: name.trim(),
       role,
       avatarColor: AVATAR_COLORS[existingMembers.length % AVATAR_COLORS.length],
+      photoUrl: joinPhotoUrl,
       initials: getInitials(name.trim()),
       contributionScore: 0,
     };
@@ -155,6 +160,14 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
               />
             </div>
 
+            <ProfilePhotoUploader
+              title="Profile Photo (optional)"
+              photoUrl={createPhotoUrl}
+              initials={getInitials(name.trim() || 'You')}
+              avatarColor={AVATAR_COLORS[existingMembers.length % AVATAR_COLORS.length]}
+              onSave={setCreatePhotoUrl}
+            />
+
             <div>
               <label className="text-slate-300 text-sm font-body block mb-2" htmlFor="group-name">
                 Group Name
@@ -220,10 +233,14 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
                 >
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                    style={{ backgroundColor: member.avatarColor }}
+                    style={member.photoUrl ? undefined : { backgroundColor: member.avatarColor }}
                     aria-hidden="true"
                   >
-                    {member.initials}
+                    {member.photoUrl ? (
+                      <img src={member.photoUrl} alt={member.name} className="w-full h-full rounded-full object-cover" />
+                    ) : (
+                      member.initials
+                    )}
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-white font-semibold font-body text-sm">{member.name}</p>
@@ -268,6 +285,13 @@ export default function Onboarding({ onComplete, existingMembers, settings, onUp
                 ))}
               </div>
             </div>
+            <ProfilePhotoUploader
+              title="Profile Photo (optional)"
+              photoUrl={joinPhotoUrl}
+              initials={getInitials(name.trim() || 'You')}
+              avatarColor={AVATAR_COLORS[existingMembers.length % AVATAR_COLORS.length]}
+              onSave={setJoinPhotoUrl}
+            />
             <button
               onClick={handleNewJoin}
               disabled={!name.trim()}

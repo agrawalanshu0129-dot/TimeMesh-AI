@@ -8,6 +8,7 @@ import TrafficBanner from '../components/TrafficBanner';
 import EventCard from '../components/EventCard';
 import EquityBar from '../components/EquityBar';
 import { useTrafficAlerts } from '../hooks/useTrafficAlerts';
+import ProfilePhotoUploader from '../components/ProfilePhotoUploader';
 
 interface DashboardProps {
   currentMember: Member | null;
@@ -15,9 +16,17 @@ interface DashboardProps {
   events: CalendarEvent[];
   conflicts: Conflict[];
   groupName: string;
+  onUpdateMemberPhoto: (memberId: string, photoUrl?: string) => void;
 }
 
-export default function Dashboard({ currentMember, members, events, conflicts, groupName }: DashboardProps) {
+export default function Dashboard({
+  currentMember,
+  members,
+  events,
+  conflicts,
+  groupName,
+  onUpdateMemberPhoto,
+}: DashboardProps) {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const { alerts, getAlertForEvent, formatDepartureTime } = useTrafficAlerts(events);
@@ -70,6 +79,15 @@ export default function Dashboard({ currentMember, members, events, conflicts, g
             >
               <Settings size={18} className="text-slate-400" aria-hidden="true" />
             </button>
+            {currentMember && (
+              <ProfilePhotoUploader
+                compact
+                photoUrl={currentMember.photoUrl}
+                initials={currentMember.initials}
+                avatarColor={currentMember.avatarColor}
+                onSave={photoUrl => onUpdateMemberPhoto(currentMember.id, photoUrl)}
+              />
+            )}
           </div>
         </div>
 
@@ -79,11 +97,15 @@ export default function Dashboard({ currentMember, members, events, conflicts, g
             <div
               key={m.id}
               className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white border-2 border-navy"
-              style={{ backgroundColor: m.avatarColor }}
+              style={m.photoUrl ? undefined : { backgroundColor: m.avatarColor }}
               title={m.name}
               aria-label={`${m.name}, ${m.role}`}
             >
-              {m.initials}
+              {m.photoUrl ? (
+                <img src={m.photoUrl} alt={m.name} className="w-full h-full rounded-full object-cover" />
+              ) : (
+                m.initials
+              )}
             </div>
           ))}
           {currentMember && (
