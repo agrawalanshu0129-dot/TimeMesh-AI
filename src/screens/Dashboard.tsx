@@ -215,7 +215,7 @@ export default function Dashboard({
       </div>
 
       {/* Equity bar */}
-      <div className="px-4 mb-24">
+      <div className="px-4 pb-32">
         <EquityBar members={members} />
       </div>
 
