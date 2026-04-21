@@ -94,7 +94,7 @@ export function useClaude() {
     const apiKey = import.meta.env.VITE_CLAUDE_API_KEY;
 
     if (!apiKey || apiKey === 'sk-ant-your-key-here') {
-      return 'AI response unavailable — please add your Claude API key to .env.local';
+      return getMockConflictAnalysis(userMessage);
     }
 
     setIsLoading(true);
@@ -178,4 +178,13 @@ function getMockResponse(userMessage: string, context: { events: CalendarEvent[]
   }
 
   return `Thanks for your message! I'm here to help with scheduling.\n\nHere's a quick summary:\n- 📅 You have **${context.events.length} events** in the next 7 days\n- ⚠️ **${conflicts.length} conflicts** need attention\n- 👥 **${context.members.length} group members** active\n\n**What I can help with:**\n- Resolving conflicts\n- Finding free time slots\n- Planning group events\n- Travel time estimates\n\n**Action:** Ask me something specific like "Any conflicts this week?" or "Find time for a family dinner."`;
+}
+
+function getMockConflictAnalysis(prompt: string): string {
+  const titleMatch = prompt.match(/Conflict: "([^"]+)"/);
+  const severityMatch = prompt.match(/\((\w+) severity\)/);
+  const title = titleMatch ? titleMatch[1] : 'This scheduling conflict';
+  const severity = severityMatch ? severityMatch[1].toLowerCase() : 'medium';
+
+  return `⚠️ **${title}** is a ${severity}-severity conflict with overlapping time slots that need attention.\n\nHere are 3 resolution options:\n\n**Option 1 — Reschedule one event (Recommended ✨)**\nMove the lower-priority event to an open slot. Low effort, minimal disruption to the group.\n\n**Option 2 — Delegate responsibility**\nAssign another group member to cover one of the conflicting commitments. Medium effort.\n\n**Option 3 — Split attendance**\nHave different members cover each event simultaneously. Requires coordination but keeps both on schedule.\n\n👉 Select an option below and tap "Apply & Notify All Members" to resolve.`;
 }
