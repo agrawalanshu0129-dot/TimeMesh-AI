@@ -13,6 +13,8 @@ import GroupPlanner from './screens/GroupPlanner';
 import CaregiverView from './screens/CaregiverView';
 import MemberManagement from './screens/MemberManagement';
 import Settings from './screens/Settings';
+import AccessibilitySettings from './screens/AccessibilitySettings';
+import GrandparentQuickNav from './components/GrandparentQuickNav';
 
 const STORAGE_KEYS = {
   MEMBER: 'timemesh_current_member',
@@ -30,6 +32,19 @@ function loadFromStorage<T>(key: string, fallback: T): T {
   }
 }
 
+function normalizeSettings(settings: GroupSettings): GroupSettings {
+  return {
+    ...settings,
+    accessibility: {
+      largeText: settings.accessibility?.largeText ?? false,
+      highContrast: settings.accessibility?.highContrast ?? false,
+      grandparentMode: settings.accessibility?.grandparentMode ?? false,
+      simplifiedNavigation: settings.accessibility?.simplifiedNavigation ?? false,
+      plainLanguage: settings.accessibility?.plainLanguage ?? false,
+    },
+  };
+}
+
 export default function App() {
   const [currentMember, setCurrentMember] = useState<Member | null>(
     loadFromStorage(STORAGE_KEYS.MEMBER, null)
@@ -41,7 +56,7 @@ export default function App() {
     loadFromStorage(STORAGE_KEYS.CHAT, [])
   );
   const [settings, setSettings] = useState<GroupSettings>(
-    loadFromStorage(STORAGE_KEYS.SETTINGS, defaultSettings)
+    normalizeSettings(loadFromStorage(STORAGE_KEYS.SETTINGS, defaultSettings))
   );
 
   const {
@@ -77,8 +92,9 @@ export default function App() {
   };
 
   const handleUpdateSettings = (newSettings: GroupSettings) => {
-    setSettings(newSettings);
-    localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(newSettings));
+    const normalized = normalizeSettings(newSettings);
+    setSettings(normalized);
+    localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(normalized));
   };
 
   const handleOnboardingComplete = (member: Member, allMembers: Member[], newSettings: GroupSettings) => {
@@ -104,10 +120,19 @@ export default function App() {
   };
 
   const isLoggedIn = !!currentMember;
+  const grandparentMode = settings.accessibility.grandparentMode;
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('grandparent-mode', grandparentMode);
+  }, [grandparentMode]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('high-contrast', settings.accessibility.highContrast);
+  }, [settings.accessibility.highContrast]);
 
   return (
     <BrowserRouter>
-      <div className="font-body bg-cream min-h-screen">
+      <div className={`font-body bg-cream min-h-screen ${grandparentMode ? 'pb-20' : ''}`}>
         <Routes>
           <Route
             path="/"
@@ -153,6 +178,7 @@ export default function App() {
                     events={events}
                     conflicts={conflicts}
                     groupName={settings.groupName}
+                    plainLanguage={settings.accessibility.plainLanguage}
                     onUpdateMemberPhoto={handleUpdateMemberPhoto}
                   />
                 )
@@ -275,8 +301,23 @@ export default function App() {
             }
           />
 
+          <Route
+            path="/settings/accessibility"
+            element={
+              isLoggedIn ? (
+                <AccessibilitySettings
+                  settings={settings}
+                  onUpdateSettings={handleUpdateSettings}
+                />
+              ) : (
+                <Navigate to="/onboarding" replace />
+              )
+            }
+          />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        {isLoggedIn && grandparentMode && <GrandparentQuickNav />}
       </div>
     </BrowserRouter>
   );

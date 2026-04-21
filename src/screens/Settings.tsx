@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut, Trash2 } from 'lucide-react';
+import { ArrowLeft, ChevronRight, LogOut, Trash2 } from 'lucide-react';
 import type { GroupSettings, Member } from '../types';
 import RoleGate from '../components/RoleGate';
 import ProfilePhotoUploader from '../components/ProfilePhotoUploader';
@@ -38,13 +38,6 @@ export default function Settings({
     setS(prev => ({
       ...prev,
       notifications: { ...prev.notifications, [key]: value },
-    }));
-  };
-
-  const toggleAccess = (key: keyof GroupSettings['accessibility']) => {
-    setS(prev => ({
-      ...prev,
-      accessibility: { ...prev.accessibility, [key]: !prev.accessibility[key] },
     }));
   };
 
@@ -190,19 +183,23 @@ export default function Settings({
         {/* Accessibility */}
         <section aria-labelledby="access-heading">
           <h2 id="access-heading" className="text-slate-400 text-xs font-body uppercase tracking-wider mb-3">Accessibility</h2>
-          <div className="bg-slate-card rounded-2xl p-4 space-y-4">
-            <ToggleRow
-              label="Large Text"
-              description="Increase font size throughout the app"
-              checked={s.accessibility.largeText}
-              onToggle={() => toggleAccess('largeText')}
-            />
-            <ToggleRow
-              label="High Contrast"
-              description="Enhance color contrast for better visibility"
-              checked={s.accessibility.highContrast}
-              onToggle={() => toggleAccess('highContrast')}
-            />
+          <div className="bg-slate-card rounded-2xl p-4">
+            <button
+              onClick={() => navigate('/settings/accessibility')}
+              className="w-full flex items-center justify-between gap-3 bg-[#F5F5F3] border border-border-soft rounded-xl px-4 py-3 min-h-[52px]"
+              aria-label="Open accessibility settings"
+            >
+              <div className="text-left">
+                <p className="text-text-primary font-body text-sm font-semibold">Grandparent Mode</p>
+                <p className="text-slate-500 font-body text-xs mt-0.5">
+                  Large text, simple words, and easier navigation.
+                </p>
+              </div>
+              <ChevronRight size={18} className="text-slate-400 flex-shrink-0" aria-hidden="true" />
+            </button>
+            <p className="text-slate-500 font-body text-xs mt-3">
+              {s.accessibility.grandparentMode ? 'Grandparent Mode is on.' : 'Grandparent Mode is off.'}
+            </p>
           </div>
         </section>
 

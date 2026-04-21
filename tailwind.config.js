@@ -9,19 +9,19 @@ export default {
       colors: {
         cream: '#FAFAF8',
         teal: {
-          DEFAULT: '#A8D5BA',
-          accent: '#9ECAB5',
-          deep: '#7FB49A',
+          DEFAULT: '#8FAF9F',
+          accent: '#809E8F',
+          deep: '#6C877A',
         },
         coral: {
-          DEFAULT: '#FFB8A3',
-          accent: '#FFA89D',
+          DEFAULT: '#CFAE9A',
+          accent: '#C39E87',
         },
         lavender: {
-          DEFAULT: '#D4B5E8',
-          accent: '#E0C9F0',
+          DEFAULT: '#B8AEC4',
+          accent: '#C9C1D1',
         },
-        gold: '#E8D39B',
+        gold: '#C8BB93',
         slate: {
           300: '#4A4A4A',
           400: '#5A5A5A',
