@@ -2,16 +2,16 @@ import { addDays, format } from 'date-fns';
 import type { Member, CalendarEvent, Conflict, GroupSettings } from '../types';
 
 const today = new Date();
-const getNextWeekday = (targetDay: number) => {
+const getUpcomingWeekday = (targetDay: number) => {
   const currentDay = today.getDay();
   const daysUntilTarget = (targetDay - currentDay + 7) % 7 || 7;
   return format(addDays(today, daysUntilTarget), 'yyyy-MM-dd');
 };
-const monday = getNextWeekday(1);
-const wednesday = getNextWeekday(3);
-const thursday = getNextWeekday(4);
-const friday = getNextWeekday(5);
-const saturday = getNextWeekday(6);
+const monday = getUpcomingWeekday(1);
+const wednesday = getUpcomingWeekday(3);
+const thursday = getUpcomingWeekday(4);
+const friday = getUpcomingWeekday(5);
+const saturday = getUpcomingWeekday(6);
 const ALEX_PHOTO =
   'data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22128%22 height=%22128%22%3E%3Crect width=%22128%22 height=%22128%22 fill=%22%23CFE9D7%22/%3E%3Ccircle cx=%2264%22 cy=%2248%22 r=%2224%22 fill=%22%238AB69A%22/%3E%3Crect x=%2228%22 y=%2282%22 width=%2272%22 height=%2228%22 rx=%2214%22 fill=%22%238AB69A%22/%3E%3C/svg%3E';
 const MAYA_PHOTO =
@@ -90,7 +90,7 @@ export const mockEvents: CalendarEvent[] = [
     repeat: 'None',
     invitedMemberIds: ['member-jake'],
     visibility: 'Everyone',
-    conflictIds: ['conflict-2'],
+    conflictIds: [],
   },
   {
     id: 'event-3',
@@ -98,12 +98,12 @@ export const mockEvents: CalendarEvent[] = [
     category: 'Kids',
     ownerId: 'member-jake',
     date: monday,
-    startTime: '11:00',
-    endTime: '12:30',
+    startTime: '14:30',
+    endTime: '16:00',
     location: 'Community Gym',
-    notes: 'Overlaps with team work meeting',
+    notes: 'Coach requested an early arrival at 2:15 PM',
     repeat: 'None',
-    invitedMemberIds: [],
+    invitedMemberIds: ['member-alex'],
     visibility: 'Everyone',
     conflictIds: ['conflict-1'],
   },
@@ -146,7 +146,7 @@ export const mockEvents: CalendarEvent[] = [
     startTime: '14:30',
     endTime: '15:30',
     location: '',
-    notes: 'Overlaps with Grandma appointment',
+    notes: 'Weekly family health check-in',
     repeat: 'None',
     invitedMemberIds: ['member-grandma'],
     visibility: 'Everyone',
@@ -206,7 +206,7 @@ export const mockConflicts: Conflict[] = [
     severity: 'High',
     eventIds: ['event-1', 'event-3'],
     aiExplanation:
-      "Alex's doctor's appointment at 2:00–3:00pm leaves almost no handoff time before Jake's school team practice commitments and pickup logistics, creating an afternoon coordination crunch.",
+      "Alex's doctor's appointment is 2:00–3:00pm while school team practice runs 2:30–4:00pm and includes Alex, creating a direct overlap from 2:30–3:00pm.",
     resolutions: [
       {
         id: 'res-1a',
@@ -232,43 +232,6 @@ export const mockConflicts: Conflict[] = [
         effort: 'High',
         impact: 'Requires clinic reschedule and may delay care.',
         whoActsId: 'member-alex',
-      },
-    ],
-    isResolved: false,
-    detectedAt: new Date().toISOString(),
-  },
-  {
-    id: 'conflict-2',
-    title: 'Work Meeting ↔ Team Practice',
-    severity: 'Medium',
-    eventIds: ['event-2', 'event-3'],
-    aiExplanation:
-      "Jake is invited to the Monday 10:00am–12:00pm work meeting while also booked for team practice from 11:00am–12:30pm, creating a direct overlap.",
-    resolutions: [
-      {
-        id: 'res-2a',
-        label: 'Join work meeting remotely for first hour',
-        detail: 'Jake can attend 10:00–11:00 and leave for practice on time.',
-        effort: 'Low',
-        impact: 'Preserves both commitments with minor compromise.',
-        whoActsId: 'member-jake',
-        isRecommended: true,
-      },
-      {
-        id: 'res-2b',
-        label: 'Shift team practice by 30 minutes',
-        detail: 'Ask coach to permit a late arrival for Jake this week.',
-        effort: 'Med',
-        impact: 'Needs coach approval and may reduce warmup time.',
-        whoActsId: 'member-jake',
-      },
-      {
-        id: 'res-2c',
-        label: 'Assign meeting notes to Maya',
-        detail: 'Maya covers action items and shares a recap after the meeting.',
-        effort: 'Low',
-        impact: 'No schedule changes required, but Jake misses the overlap section.',
-        whoActsId: 'member-maya',
       },
     ],
     isResolved: false,
