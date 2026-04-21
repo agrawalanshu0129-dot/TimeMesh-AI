@@ -9,21 +9,35 @@ export default function EquityBar({ members }: EquityBarProps) {
   if (coordinators.length < 2) return null;
 
   const total = coordinators.reduce((sum, m) => sum + m.contributionScore, 0) || 1;
-  let usedPercentage = 0;
-  const coordinatorLoad = coordinators.map((m, index) => {
-    const pct = index === coordinators.length - 1
-      ? 100 - usedPercentage
-      : Math.round((m.contributionScore / total) * 100);
-    usedPercentage += pct;
-    return { member: m, pct };
-  });
+  const exactPercentages = coordinators.map(m => (m.contributionScore / total) * 100);
+  const basePercentages = exactPercentages.map(Math.floor);
+  let remainder = 100 - basePercentages.reduce((sum, pct) => sum + pct, 0);
 
-  const sortedByLoad = [...coordinatorLoad].sort((a, b) => b.pct - a.pct);
-  const primary = sortedByLoad[0];
-  const secondary = sortedByLoad[1];
-  if (!primary || !secondary) return null;
+  if (remainder > 0) {
+    const byRemainder = exactPercentages
+      .map((value, index) => ({ index, remainder: value - basePercentages[index] }))
+      .sort((a, b) => b.remainder - a.remainder);
+
+    for (let i = 0; i < byRemainder.length && remainder > 0; i += 1) {
+      basePercentages[byRemainder[i].index] += 1;
+      remainder -= 1;
+    }
+  }
+
+  const coordinatorLoad = coordinators.map((member, index) => ({ member, pct: basePercentages[index] }));
+
+  let primary = coordinatorLoad[0]!;
+  let secondary = coordinatorLoad[1]!;
+  for (const load of coordinatorLoad.slice(2)) {
+    if (load.pct > primary.pct) {
+      secondary = primary;
+      primary = load;
+    } else if (load.pct > secondary.pct) {
+      secondary = load;
+    }
+  }
   const gap = Math.abs(primary.pct - secondary.pct);
-  const barBackgroundColor = '#F5F5F3';
+  const barBackgroundClass = 'bg-[#F5F5F3]';
 
   const isUnequal = gap > 20;
 
@@ -39,7 +53,7 @@ export default function EquityBar({ members }: EquityBarProps) {
       {/* Percentages */}
       <div className="flex flex-wrap gap-2 mb-3">
         {coordinatorLoad.map(({ member, pct }) => (
-          <div key={member.id} className="flex items-center gap-1.5 rounded-full px-2.5 py-1" style={{ backgroundColor: barBackgroundColor }}>
+          <div key={member.id} className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 ${barBackgroundClass}`}>
             <div
               className="w-2.5 h-2.5 rounded-full flex-shrink-0"
               style={{ backgroundColor: member.avatarColor }}
@@ -51,7 +65,7 @@ export default function EquityBar({ members }: EquityBarProps) {
       </div>
 
       {/* Bar */}
-      <div className="relative h-6 rounded-full overflow-hidden flex" style={{ backgroundColor: barBackgroundColor }} aria-hidden="true">
+      <div className={`relative h-6 rounded-full overflow-hidden flex ${barBackgroundClass}`} aria-hidden="true">
         {coordinatorLoad.map(({ member, pct }) => (
           <div
             key={member.id}
