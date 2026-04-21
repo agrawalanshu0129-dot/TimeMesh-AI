@@ -105,9 +105,9 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
   };
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-slate-700">
+      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
           onClick={() => navigate(-1)}
           className="w-10 h-10 rounded-full bg-slate-card flex items-center justify-center"
@@ -115,7 +115,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
         >
           <ArrowLeft size={18} className="text-slate-400" aria-hidden="true" />
         </button>
-        <h1 className="text-white font-heading font-bold text-lg">Group Planner</h1>
+        <h1 className="text-text-primary font-heading font-bold text-lg">Group Planner</h1>
       </div>
 
       <div className="px-4 py-6 pb-32 space-y-6 max-w-lg mx-auto">
@@ -129,8 +129,8 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
                 onClick={() => setEventType(type)}
                 className={`py-2.5 px-2 rounded-xl text-xs font-body font-medium border transition-colors min-h-[44px] ${
                   eventType === type
-                    ? 'bg-teal text-white border-teal'
-                    : 'bg-slate-card text-slate-400 border-slate-600'
+                    ? 'bg-teal text-text-primary border-teal'
+                    : 'bg-slate-card text-slate-400 border-border-soft'
                 }`}
                 aria-pressed={eventType === type}
               >
@@ -143,7 +143,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
         {/* Duration */}
         <div>
           <label className="text-slate-300 text-sm font-body block mb-2">
-            Duration: <span className="text-teal-accent">{duration} hour{duration !== 1 ? 's' : ''}</span>
+            Duration: <span className="text-teal-deep">{duration} hour{duration !== 1 ? 's' : ''}</span>
           </label>
           <input
             type="range"
@@ -170,14 +170,14 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
                 onClick={() => toggleParticipant(m.id)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-colors min-h-[44px] ${
                   selectedParticipantIds.includes(m.id)
-                    ? 'border-teal bg-teal/10 text-white'
-                    : 'border-slate-600 bg-slate-card text-slate-400'
+                    ? 'border-teal bg-teal/10 text-text-primary'
+                    : 'border-border-soft bg-slate-card text-slate-400'
                 }`}
                 aria-pressed={selectedParticipantIds.includes(m.id)}
                 aria-label={`${selectedParticipantIds.includes(m.id) ? 'Remove' : 'Add'} ${m.name}`}
               >
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                  className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-text-primary"
                   style={{ backgroundColor: m.avatarColor }}
                   aria-hidden="true"
                 >
@@ -210,7 +210,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
                     <td className="pr-2 py-1">
                       <div className="flex items-center gap-1">
                         <div
-                          className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                          className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-text-primary"
                           style={{ backgroundColor: member.avatarColor }}
                           aria-hidden="true"
                         >
@@ -270,7 +270,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
                   >
                     <p className="text-slate-400 text-xs font-body mb-1">{format(day, 'EEE')}</p>
                     <WeatherIcon size={20} className={weather.suitable ? 'text-amber-400 mx-auto' : 'text-slate-500 mx-auto'} aria-hidden="true" />
-                    <p className="text-white text-xs font-body mt-1">{weather.temp}</p>
+                    <p className="text-text-primary text-xs font-body mt-1">{weather.temp}</p>
                     <p className={`text-xs font-body ${weather.suitable ? 'text-green-400' : 'text-red-400'}`}>
                       {weather.suitable ? '✓ Good' : '✗ Rain'}
                     </p>
@@ -285,7 +285,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
         <button
           onClick={findFreeSlots}
           disabled={isLoading || selectedParticipantIds.length === 0}
-          className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-white font-semibold font-body py-4 rounded-2xl min-h-[56px] flex items-center justify-center gap-2 transition-colors"
+          className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-text-primary font-semibold font-body py-4 rounded-2xl min-h-[56px] flex items-center justify-center gap-2 transition-colors"
         >
           <Search size={18} aria-hidden="true" />
           {isLoading ? 'Finding slots...' : 'Find Best Times'}
@@ -293,9 +293,9 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
 
         {/* AI Suggestion */}
         {aiSuggestion && (
-          <div className="bg-teal/10 border border-teal/30 rounded-2xl p-4">
-            <p className="text-teal-accent text-xs font-body font-semibold mb-2">🤖 AI Recommendation</p>
-            <p className="text-slate-200 text-sm font-body leading-relaxed whitespace-pre-wrap">{aiSuggestion}</p>
+          <div className="bg-[#EEF9F1] border border-[#C8E7D4] rounded-2xl p-4">
+            <p className="text-teal-deep text-xs font-body font-semibold mb-2">🤖 AI Recommendation</p>
+            <p className="text-text-secondary text-sm font-body leading-relaxed whitespace-pre-wrap">{aiSuggestion}</p>
           </div>
         )}
 
@@ -307,7 +307,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
               {freeSlots.map(slot => (
                 <div key={slot} className="bg-slate-card rounded-xl p-3 flex items-center justify-between">
                   <div>
-                    <p className="text-white font-body text-sm font-semibold">
+                    <p className="text-text-primary font-body text-sm font-semibold">
                       {format(parseISO(slot), 'EEEE, MMMM d')}
                     </p>
                     <p className="text-slate-400 text-xs font-body">
@@ -316,7 +316,7 @@ export default function GroupPlanner({ members, events, onAddEvent }: GroupPlann
                   </div>
                   <button
                     onClick={() => handleScheduleSlot(slot)}
-                    className="bg-teal text-white text-xs font-body font-semibold px-3 py-2 rounded-lg min-h-[36px]"
+                    className="bg-teal text-text-primary text-xs font-body font-semibold px-3 py-2 rounded-lg min-h-[36px]"
                     aria-label={`Schedule ${eventType} on ${format(parseISO(slot), 'MMMM d')}`}
                   >
                     Schedule

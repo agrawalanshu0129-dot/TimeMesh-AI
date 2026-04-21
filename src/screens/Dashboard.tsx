@@ -54,12 +54,12 @@ export default function Dashboard({
   });
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="px-4 pt-12 pb-4">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-xl font-heading font-bold text-white">{groupName}</h1>
+            <h1 className="text-xl font-heading font-bold text-text-primary">{groupName}</h1>
             <p className="text-slate-400 text-xs font-body mt-0.5">
               {format(new Date(), 'EEEE, MMMM d')}
             </p>
@@ -135,12 +135,12 @@ export default function Dashboard({
                 aria-label={`${format(day, 'EEEE, MMMM d')}${dayEvents.length > 0 ? `, ${dayEvents.length} events` : ''}${hasConflict ? ', has conflict' : ''}`}
                 className={`flex-shrink-0 flex flex-col items-center gap-1 px-3 py-2.5 rounded-xl min-w-[52px] min-h-[64px] transition-colors ${
                   isSelected
-                    ? 'bg-teal text-white'
+                    ? 'bg-teal text-text-primary'
                     : 'bg-slate-card text-slate-400'
                 }`}
               >
                 <span className="text-xs font-body font-medium">{format(day, 'EEE')}</span>
-                <span className={`text-lg font-heading font-bold ${isToday && !isSelected ? 'text-teal-accent' : ''}`}>
+                <span className={`text-lg font-heading font-bold ${isToday && !isSelected ? 'text-teal-deep' : ''}`}>
                   {format(day, 'd')}
                 </span>
                 <div className="flex gap-0.5">
@@ -180,7 +180,7 @@ export default function Dashboard({
       {/* Events for selected day */}
       <div className="px-4 mb-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-white font-heading font-semibold text-base">
+          <h2 className="text-text-primary font-heading font-semibold text-base">
             {format(parseISO(selectedDate), 'EEEE, MMM d')}
           </h2>
           <span className="text-slate-400 text-xs font-body">
@@ -194,7 +194,7 @@ export default function Dashboard({
             <p className="text-slate-500 font-body text-sm">No events this day</p>
             <button
               onClick={() => navigate('/add-event')}
-              className="mt-4 text-teal-accent text-sm font-body underline"
+              className="mt-4 text-teal-deep text-sm font-body underline"
             >
               Add an event
             </button>
@@ -218,7 +218,7 @@ export default function Dashboard({
       </div>
 
       {/* Bottom nav */}
-      <div className="fixed bottom-0 left-0 right-0 bg-slate-card border-t border-slate-700 flex justify-around py-3 px-4 z-10">
+      <div className="fixed bottom-0 left-0 right-0 bg-slate-card border-t border-border-soft flex justify-around py-3 px-4 z-10">
         <button
           onClick={() => navigate('/dashboard')}
           className="flex flex-col items-center gap-1 min-w-[44px] min-h-[44px] justify-center"
@@ -240,7 +240,7 @@ export default function Dashboard({
           className="w-14 h-14 rounded-full bg-teal flex items-center justify-center -mt-4 shadow-lg"
           aria-label="Add new event"
         >
-          <Plus size={24} className="text-white" aria-hidden="true" />
+          <Plus size={24} className="text-text-primary" aria-hidden="true" />
         </button>
         <button
           onClick={() => navigate('/ai-assistant')}
