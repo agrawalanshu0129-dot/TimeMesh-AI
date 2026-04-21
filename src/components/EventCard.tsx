@@ -1,24 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, AlertCircle, MapPin, Clock } from 'lucide-react';
 import type { CalendarEvent, Member } from '../types';
-
-const CATEGORY_COLORS: Record<string, string> = {
-  Work: 'border-blue-500 bg-blue-500/10',
-  Kids: 'border-green-500 bg-green-500/10',
-  Family: 'border-purple-500 bg-purple-500/10',
-  Personal: 'border-pink-500 bg-pink-500/10',
-  Social: 'border-orange-500 bg-orange-500/10',
-  Fitness: 'border-teal-500 bg-teal-500/10',
-};
-
-const CATEGORY_CHIP_COLORS: Record<string, string> = {
-  Work: 'bg-blue-500/20 text-blue-300',
-  Kids: 'bg-green-500/20 text-green-300',
-  Family: 'bg-purple-500/20 text-purple-300',
-  Personal: 'bg-pink-500/20 text-pink-300',
-  Social: 'bg-orange-500/20 text-orange-300',
-  Fitness: 'bg-teal-500/20 text-teal-300',
-};
+import { CATEGORY_CARD_COLORS, CATEGORY_CHIP_COLORS } from '../config/colorPalette';
 
 interface EventCardProps {
   event: CalendarEvent;
@@ -30,13 +13,12 @@ interface EventCardProps {
 export default function EventCard({ event, members, hasConflict, onEdit }: EventCardProps) {
   const [expanded, setExpanded] = useState(false);
   const owner = members.find(m => m.id === event.ownerId);
-  const colorClass = CATEGORY_COLORS[event.category] || 'border-slate-500 bg-slate-500/10';
+  const colorClass = CATEGORY_CARD_COLORS[event.category] || 'border-slate-500 bg-slate-500/10';
   const chipClass = CATEGORY_CHIP_COLORS[event.category] || 'bg-slate-500/20 text-slate-300';
 
   return (
     <div
       className={`rounded-xl border-l-4 ${colorClass} p-3 mb-2 animate-slide-in`}
-      style={{ borderLeftColor: colorClass.split(' ')[0].replace('border-', '').replace('-500', '') }}
     >
       <button
         className="w-full text-left"

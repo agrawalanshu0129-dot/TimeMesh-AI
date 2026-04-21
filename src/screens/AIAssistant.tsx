@@ -23,7 +23,7 @@ export default function AIAssistant({ messages, onUpdateMessages, events, member
         >
           <ArrowLeft size={18} className="text-slate-400" aria-hidden="true" />
         </button>
-        <h1 className="text-text-primary font-heading font-bold text-lg">AI Assistant</h1>
+        <h1 className="text-text-primary font-heading font-bold text-lg">Help Chat</h1>
       </div>
       <div className="flex-1 overflow-hidden">
         <AIChat

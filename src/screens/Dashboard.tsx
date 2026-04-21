@@ -16,6 +16,7 @@ interface DashboardProps {
   events: CalendarEvent[];
   conflicts: Conflict[];
   groupName: string;
+  plainLanguage: boolean;
   onUpdateMemberPhoto: (memberId: string, photoUrl?: string) => void;
 }
 
@@ -25,6 +26,7 @@ export default function Dashboard({
   events,
   conflicts,
   groupName,
+  plainLanguage,
   onUpdateMemberPhoto,
 }: DashboardProps) {
   const navigate = useNavigate();
@@ -242,14 +244,14 @@ export default function Dashboard({
         >
           <Plus size={24} className="text-text-primary" aria-hidden="true" />
         </button>
-        <button
-          onClick={() => navigate('/ai-assistant')}
-          className="flex flex-col items-center gap-1 min-w-[44px] min-h-[44px] justify-center"
-          aria-label="AI Assistant"
-        >
-          <Bot size={20} className="text-slate-400" aria-hidden="true" />
-          <span className="text-slate-400 text-xs font-body">AI</span>
-        </button>
+            <button
+              onClick={() => navigate('/ai-assistant')}
+              className="flex flex-col items-center gap-1 min-w-[44px] min-h-[44px] justify-center"
+              aria-label={plainLanguage ? 'Help chat' : 'AI Assistant'}
+            >
+              <Bot size={20} className="text-slate-400" aria-hidden="true" />
+              <span className="text-slate-400 text-xs font-body">{plainLanguage ? 'Help' : 'AI'}</span>
+            </button>
         <button
           onClick={() => navigate('/settings')}
           className="flex flex-col items-center gap-1 min-w-[44px] min-h-[44px] justify-center"

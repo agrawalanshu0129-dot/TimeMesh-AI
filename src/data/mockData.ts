@@ -283,5 +283,8 @@ export const defaultSettings: GroupSettings = {
   accessibility: {
     largeText: false,
     highContrast: false,
+    grandparentMode: false,
+    simplifiedNavigation: false,
+    plainLanguage: false,
   },
 };

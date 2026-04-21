@@ -117,7 +117,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
           </div>
           <div>
             <h2 className="text-text-primary font-semibold font-heading text-base">TimeMesh AI</h2>
-            <p className="text-teal-deep text-xs font-body">Your scheduling assistant</p>
+            <p className="text-teal-deep text-xs font-body">Family calendar helper</p>
           </div>
         </div>
         {onClose && (
@@ -140,7 +140,7 @@ export default function AIChat({ messages, onNewMessage, events, members, onClos
             </div>
             <h3 className="text-text-primary font-heading text-lg mb-2">Hi! I'm TimeMesh AI 👋</h3>
             <p className="text-slate-400 text-sm font-body mb-6 leading-relaxed">
-              I can help you spot conflicts, find free time, and plan group events. What do you need?
+              I can help you find overlaps, open time, and plan events. What do you need?
             </p>
             <div className="grid grid-cols-1 gap-2">
               {SUGGESTED_PROMPTS.map(prompt => (

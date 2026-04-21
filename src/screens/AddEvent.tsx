@@ -3,17 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, MapPin, ChevronDown } from 'lucide-react';
 import type { CalendarEvent, Member, Category, RepeatType, Visibility } from '../types';
 import { useClaude } from '../hooks/useClaude';
+import { CATEGORY_SELECTED_COLORS } from '../config/colorPalette';
 
 const CATEGORIES: Category[] = ['Work', 'Kids', 'Family', 'Personal', 'Social', 'Fitness'];
-
-const CATEGORY_COLORS: Record<Category, string> = {
-  Work: 'bg-blue-500/20 text-blue-300 border-blue-500/50',
-  Kids: 'bg-green-500/20 text-green-300 border-green-500/50',
-  Family: 'bg-purple-500/20 text-purple-300 border-purple-500/50',
-  Personal: 'bg-pink-500/20 text-pink-300 border-pink-500/50',
-  Social: 'bg-orange-500/20 text-orange-300 border-orange-500/50',
-  Fitness: 'bg-teal-500/20 text-teal-300 border-teal-500/50',
-};
 
 const REPEATS: RepeatType[] = ['None', 'Daily', 'Weekly', 'Monthly'];
 const VISIBILITY_OPTIONS: Visibility[] = ['Everyone', 'Owners only', 'Specific members'];
@@ -162,7 +154,7 @@ export default function AddEvent({ currentMember, members, events, onAddEvent, o
                 key={cat}
                 onClick={() => setCategory(cat)}
                 className={`px-3 py-2 rounded-xl text-xs font-body font-semibold border transition-colors min-h-[36px] ${
-                  category === cat ? CATEGORY_COLORS[cat] : 'bg-slate-card text-slate-400 border-border-soft'
+                  category === cat ? CATEGORY_SELECTED_COLORS[cat] : 'bg-slate-card text-slate-400 border-border-soft'
                 }`}
                 aria-pressed={category === cat}
                 aria-label={`Category: ${cat}`}

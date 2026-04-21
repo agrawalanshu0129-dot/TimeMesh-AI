@@ -87,6 +87,9 @@ export interface GroupSettings {
   accessibility: {
     largeText: boolean;
     highContrast: boolean;
+    grandparentMode: boolean;
+    simplifiedNavigation: boolean;
+    plainLanguage: boolean;
   };
 }
 

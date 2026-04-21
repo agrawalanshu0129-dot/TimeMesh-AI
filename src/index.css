@@ -21,6 +21,37 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  html.grandparent-mode {
+    font-size: 18px;
+  }
+
+  html.grandparent-mode h1,
+  html.grandparent-mode h2,
+  html.grandparent-mode h3,
+  html.grandparent-mode h4,
+  html.grandparent-mode p,
+  html.grandparent-mode span,
+  html.grandparent-mode label,
+  html.grandparent-mode a,
+  html.grandparent-mode button,
+  html.grandparent-mode input,
+  html.grandparent-mode select,
+  html.grandparent-mode textarea {
+    letter-spacing: 0.01em;
+  }
+
+  html.grandparent-mode button,
+  html.grandparent-mode [role='button'],
+  html.grandparent-mode input,
+  html.grandparent-mode select,
+  html.grandparent-mode textarea {
+    min-height: 52px;
+  }
+
+  html.high-contrast {
+    filter: contrast(1.08);
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Fraunces', serif;
   }
