@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, UserPlus, Copy } from 'lucide-react';
+import { ArrowLeft, UserPlus, Copy, AlertTriangle } from 'lucide-react';
 import type { Member, Role } from '../types';
 import RoleGate from '../components/RoleGate';
 
 const ROLE_COLORS: Record<Role, string> = {
-  'Owner': 'bg-teal/20 text-teal-accent border-teal/30',
-  'Co-Owner': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-  'Member': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-  'Caregiver': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+  'Owner': 'bg-teal/30 text-text-primary border-teal/40',
+  'Co-Owner': 'bg-coral/20 text-text-primary border-coral/40',
+  'Member': 'bg-lavender/25 text-text-primary border-lavender/40',
+  'Caregiver': 'bg-[#E6F4EA] text-text-primary border-[#BFDCC9]',
 };
 
 const ROLES: Role[] = ['Owner', 'Co-Owner', 'Member', 'Caregiver'];
@@ -20,10 +20,23 @@ interface MemberManagementProps {
   onUpdateMembers: (members: Member[]) => void;
 }
 
+interface RevocationRecord {
+  id: string;
+  removedMember: Member;
+  removedAt: string;
+  removedBy: string;
+  note: string;
+}
+
 export default function MemberManagement({ currentMember, members, events, onUpdateMembers }: MemberManagementProps) {
   const navigate = useNavigate();
   const [inviteCode, setInviteCode] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
+  const [pendingRemoval, setPendingRemoval] = useState<Member | null>(null);
+  const [revocationNote, setRevocationNote] = useState('');
+  const [revocationHistory, setRevocationHistory] = useState<RevocationRecord[]>([]);
+  const [lastRemoval, setLastRemoval] = useState<{ member: Member; index: number; recordId: string } | null>(null);
+  const [feedback, setFeedback] = useState('');
 
   const isOwner = currentMember?.role === 'Owner' || currentMember?.role === 'Co-Owner';
 
@@ -47,11 +60,46 @@ export default function MemberManagement({ currentMember, members, events, onUpd
     onUpdateMembers(updated);
   };
 
-  const removeMember = (memberId: string) => {
-    if (memberId === currentMember?.id) return; // Can't remove yourself
-    if (window.confirm('Remove this member from the group?')) {
-      onUpdateMembers(members.filter(m => m.id !== memberId));
-    }
+  const requestRemoveMember = (member: Member) => {
+    if (member.id === currentMember?.id) return;
+    setPendingRemoval(member);
+    setRevocationNote('');
+  };
+
+  const confirmRemoveMember = () => {
+    if (!pendingRemoval || pendingRemoval.id === currentMember?.id) return;
+
+    const removedIndex = members.findIndex(m => m.id === pendingRemoval.id);
+    if (removedIndex < 0) return;
+
+    const recordId = `revoked-${Date.now()}`;
+    const removedAt = new Date().toISOString();
+
+    onUpdateMembers(members.filter(m => m.id !== pendingRemoval.id));
+    setRevocationHistory(prev => [
+      {
+        id: recordId,
+        removedMember: pendingRemoval,
+        removedAt,
+        removedBy: currentMember?.name || 'Owner',
+        note: revocationNote.trim() || 'No note added.',
+      },
+      ...prev,
+    ]);
+    setLastRemoval({ member: pendingRemoval, index: removedIndex, recordId });
+    setFeedback(`Access removed for ${pendingRemoval.name}.`);
+    setPendingRemoval(null);
+    setRevocationNote('');
+  };
+
+  const undoLastRemoval = () => {
+    if (!lastRemoval) return;
+    const restored = [...members];
+    restored.splice(lastRemoval.index, 0, lastRemoval.member);
+    onUpdateMembers(restored);
+    setRevocationHistory(prev => prev.filter(record => record.id !== lastRemoval.recordId));
+    setFeedback(`Restored access for ${lastRemoval.member.name}.`);
+    setLastRemoval(null);
   };
 
   const getMemberContribution = (memberId: string): number => {
@@ -66,58 +114,72 @@ export default function MemberManagement({ currentMember, members, events, onUpd
   };
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream text-text-primary">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-slate-700">
+      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
           onClick={() => navigate(-1)}
-          className="w-10 h-10 rounded-full bg-slate-card flex items-center justify-center"
+          className="w-10 h-10 rounded-full bg-slate-card border border-border-soft flex items-center justify-center"
           aria-label="Go back"
         >
-          <ArrowLeft size={18} className="text-slate-400" aria-hidden="true" />
+          <ArrowLeft size={18} className="text-text-secondary" aria-hidden="true" />
         </button>
-        <h1 className="text-white font-heading font-bold text-lg">Members</h1>
+        <h1 className="font-heading font-bold text-lg text-text-primary">Members</h1>
       </div>
 
       <div className="px-4 py-6 pb-24 max-w-lg mx-auto space-y-6">
+        {feedback && (
+          <div className="bg-[#F3FFF6] border border-[#C8E7D4] rounded-xl p-3">
+            <p className="text-sm font-body text-text-primary">{feedback}</p>
+            {lastRemoval && (
+              <button
+                onClick={undoLastRemoval}
+                className="mt-2 text-sm font-body font-semibold text-teal-deep underline"
+              >
+                Undo
+              </button>
+            )}
+          </div>
+        )}
+
         <RoleGate
           currentMember={currentMember}
           allowedRoles={['Owner', 'Co-Owner']}
           fallback={
-            <div className="bg-amber-900/20 border border-amber-500/30 rounded-xl p-3">
-              <p className="text-amber-300 text-sm font-body">View only — only Owners can manage members.</p>
+            <div className="bg-[#FFF8F5] border border-coral/40 rounded-xl p-3">
+              <p className="text-text-secondary text-sm font-body">View only — only Owners can manage members.</p>
             </div>
           }
         >
           {/* Invite new member */}
-          <div className="bg-slate-card rounded-2xl p-4">
-            <h2 className="text-white font-body font-semibold text-sm mb-3 flex items-center gap-2">
-              <UserPlus size={16} className="text-teal-accent" aria-hidden="true" />
+          <div className="bg-slate-card border border-border-soft rounded-2xl p-4">
+            <h2 className="font-body font-semibold text-sm mb-3 flex items-center gap-2 text-text-primary">
+              <UserPlus size={16} className="text-teal-deep" aria-hidden="true" />
               Invite New Member
             </h2>
             {!inviteCode ? (
               <button
                 onClick={generateInviteCode}
-                className="w-full bg-teal/20 border border-teal/30 text-teal-accent text-sm font-body font-semibold py-3 rounded-xl min-h-[48px]"
+                className="w-full bg-[#EEF9F1] border border-[#C8E7D4] text-text-primary text-sm font-body font-semibold py-3 rounded-xl min-h-[48px]"
               >
                 Generate Invite Code
               </button>
             ) : (
               <div className="flex gap-2">
-                <div className="flex-1 bg-slate-700 rounded-xl px-4 py-3 font-mono text-teal-accent text-sm">
+                <div className="flex-1 bg-[#F5F5F3] border border-border-soft rounded-xl px-4 py-3 font-mono text-text-primary text-sm">
                   {inviteCode}
                 </div>
                 <button
                   onClick={copyCode}
-                  className="w-12 h-12 rounded-xl bg-teal flex items-center justify-center"
+                  className="w-12 h-12 rounded-xl bg-teal flex items-center justify-center border border-[#96C8AE]"
                   aria-label="Copy invite code"
                 >
-                  <Copy size={16} className="text-white" aria-hidden="true" />
+                  <Copy size={16} className="text-text-primary" aria-hidden="true" />
                 </button>
               </div>
             )}
             {copiedCode && (
-              <p className="text-green-400 text-xs font-body mt-2">✓ Copied to clipboard!</p>
+              <p className="text-green-700 text-xs font-body mt-2">✓ Copied to clipboard!</p>
             )}
           </div>
         </RoleGate>
@@ -134,7 +196,7 @@ export default function MemberManagement({ currentMember, members, events, onUpd
                 {categoryMembers.map(member => (
                   <div
                     key={member.id}
-                    className="bg-slate-card rounded-2xl p-4"
+                    className="bg-slate-card border border-border-soft rounded-2xl p-4"
                     aria-label={`${member.name}, ${member.role}`}
                   >
                     <div className="flex items-center gap-3">
@@ -151,7 +213,7 @@ export default function MemberManagement({ currentMember, members, events, onUpd
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="text-white font-body font-semibold text-sm">{member.name}</p>
+                          <p className="text-text-primary font-body font-semibold text-sm">{member.name}</p>
                           {member.id === currentMember?.id && (
                             <span className="text-slate-500 text-xs font-body">(You)</span>
                           )}
@@ -164,7 +226,7 @@ export default function MemberManagement({ currentMember, members, events, onUpd
 
                     {/* Contribution */}
                     <div className="mt-3 flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-[#EEEDE9] rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full"
                           style={{
@@ -179,25 +241,35 @@ export default function MemberManagement({ currentMember, members, events, onUpd
                       </span>
                     </div>
 
-                    {/* Actions (owners only, can't act on themselves or demote owners if co-owner) */}
+                    {/* Actions */}
                     {isOwner && member.id !== currentMember?.id && (
-                      <div className="mt-3 flex gap-2 flex-wrap">
-                        {ROLES.filter(r => r !== member.role).slice(0, 3).map(r => (
-                          <button
-                            key={r}
-                            onClick={() => changeRole(member.id, r)}
-                            className="text-xs font-body px-2 py-1.5 rounded-lg bg-slate-700 text-slate-300 min-h-[32px]"
-                            aria-label={`Change ${member.name}'s role to ${r}`}
-                          >
-                            → {r}
-                          </button>
-                        ))}
+                      <div className="mt-3 space-y-2">
+                        <label htmlFor={`member-role-${member.id}`} className="text-xs font-body text-slate-500 block">
+                          Role
+                        </label>
+                        <select
+                          id={`member-role-${member.id}`}
+                          value={member.role}
+                          onChange={e => changeRole(member.id, e.target.value as Role)}
+                          className="w-full bg-[#F5F5F3] border border-border-soft rounded-lg text-sm text-text-primary px-3 py-2"
+                          aria-label={`Role for ${member.name}`}
+                        >
+                          {ROLES.map(roleOption => (
+                            <option
+                              key={roleOption}
+                              value={roleOption}
+                              disabled={currentMember?.role === 'Co-Owner' && roleOption === 'Owner'}
+                            >
+                              {roleOption}
+                            </option>
+                          ))}
+                        </select>
                         <button
-                          onClick={() => removeMember(member.id)}
-                          className="text-xs font-body px-2 py-1.5 rounded-lg bg-red-900/30 text-red-400 min-h-[32px]"
+                          onClick={() => requestRemoveMember(member)}
+                          className="w-full text-sm font-body px-3 py-2 rounded-lg bg-[#FFECE7] text-[#B63E2E] border border-[#F3B9AD] min-h-[40px] font-semibold"
                           aria-label={`Remove ${member.name} from group`}
                         >
-                          Remove
+                          Remove Access
                         </button>
                       </div>
                     )}
@@ -207,7 +279,71 @@ export default function MemberManagement({ currentMember, members, events, onUpd
             </div>
           );
         })}
+
+        {revocationHistory.length > 0 && (
+          <section className="bg-[#FBFBF9] border border-border-soft rounded-2xl p-4">
+            <h2 className="text-text-primary text-sm font-body font-semibold mb-2">Access Revocation Notes</h2>
+            <div className="space-y-2">
+              {revocationHistory.map(record => (
+                <div key={record.id} className="bg-slate-card border border-border-soft rounded-xl p-3">
+                  <p className="text-sm font-body text-text-primary">
+                    {record.removedMember.name} access removed by {record.removedBy}
+                  </p>
+                  {record.removedMember.role === 'Caregiver' && (
+                    <p className="text-xs font-body text-[#B63E2E] mt-1">Caregiver access revoked (care responsibility changed)</p>
+                  )}
+                  <p className="text-xs font-body text-slate-500 mt-1">{record.note}</p>
+                  <p className="text-xs font-body text-slate-400 mt-1">
+                    {new Date(record.removedAt).toLocaleString()}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
+
+      {pendingRemoval && (
+        <div className="fixed inset-0 bg-black/25 flex items-center justify-center px-4 z-20">
+          <div className="w-full max-w-sm bg-slate-card border border-[#F3B9AD] rounded-2xl p-5">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-full bg-[#FFECE7] flex items-center justify-center">
+                <AlertTriangle size={18} className="text-[#B63E2E]" aria-hidden="true" />
+              </div>
+              <div>
+                <h2 className="font-heading font-bold text-base text-text-primary">Remove access?</h2>
+                <p className="text-sm font-body text-text-secondary mt-1">
+                  {pendingRemoval.name} will lose access to this group and must be re-invited to return.
+                </p>
+              </div>
+            </div>
+            <label htmlFor="revocation-note" className="block text-xs font-body text-slate-500 mt-4 mb-1">
+              Revocation note (optional)
+            </label>
+            <input
+              id="revocation-note"
+              value={revocationNote}
+              onChange={e => setRevocationNote(e.target.value)}
+              placeholder="e.g. no longer caregiving"
+              className="w-full bg-[#F5F5F3] border border-border-soft rounded-lg text-sm px-3 py-2 text-text-primary"
+            />
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={() => setPendingRemoval(null)}
+                className="flex-1 py-2 rounded-lg border border-border-soft text-sm font-body text-text-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmRemoveMember}
+                className="flex-1 py-2 rounded-lg bg-[#FFECE7] border border-[#F3B9AD] text-sm font-body font-semibold text-[#B63E2E]"
+              >
+                Remove Access
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

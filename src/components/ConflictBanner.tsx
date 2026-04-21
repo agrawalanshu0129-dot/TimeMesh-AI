@@ -22,20 +22,20 @@ export default function ConflictBanner({ conflicts }: ConflictBannerProps) {
       className="w-full text-left animate-pulse-slow"
       aria-label={`Conflict alert: ${topConflict.title} — tap to resolve`}
     >
-      <div className="bg-red-900/80 border border-red-500 rounded-xl p-3 flex items-center gap-3">
-        <div className="flex-shrink-0 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-          <AlertTriangle size={16} className="text-white" aria-hidden="true" />
+      <div className="bg-[#FFECE7] border border-[#F3B9AD] rounded-xl p-3 flex items-center gap-3">
+        <div className="flex-shrink-0 w-8 h-8 bg-[#F7C4BA] rounded-full flex items-center justify-center">
+          <AlertTriangle size={16} className="text-[#B63E2E]" aria-hidden="true" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-white text-sm font-semibold leading-tight font-body">
+          <p className="text-text-primary text-sm font-semibold leading-tight font-body">
             {topConflict.title}
           </p>
-          <p className="text-red-300 text-xs mt-0.5 font-body">
+          <p className="text-[#B63E2E] text-xs mt-0.5 font-body">
             conflict detected — tap to resolve
           </p>
         </div>
         {activeConflicts.length > 1 && (
-          <span className="flex-shrink-0 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full font-body">
+          <span className="flex-shrink-0 bg-[#F7C4BA] text-[#B63E2E] text-xs font-bold px-2 py-1 rounded-full font-body">
             +{activeConflicts.length - 1}
           </span>
         )}

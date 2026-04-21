@@ -88,10 +88,10 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
 
   if (!conflict) {
     return (
-      <div className="min-h-screen bg-navy flex items-center justify-center px-4">
+      <div className="min-h-screen bg-cream flex items-center justify-center px-4">
         <div className="text-center">
           <p className="text-slate-400 font-body">Conflict not found</p>
-          <button onClick={() => navigate('/dashboard')} className="mt-4 text-teal-accent font-body text-sm">
+          <button onClick={() => navigate('/dashboard')} className="mt-4 text-teal-deep font-body text-sm">
             Back to Dashboard
           </button>
         </div>
@@ -101,12 +101,12 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
 
   if (resolved) {
     return (
-      <div className="min-h-screen bg-navy flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4">
         <div className="text-center animate-fade-in">
-          <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-20 h-20 bg-[#E6F4EA] rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle size={40} className="text-green-400" aria-hidden="true" />
           </div>
-          <h2 className="text-white font-heading text-2xl font-bold mb-2">Conflict Resolved! 🎉</h2>
+          <h2 className="text-text-primary font-heading text-2xl font-bold mb-2">Conflict Resolved! 🎉</h2>
           <p className="text-slate-400 font-body text-sm">All members have been notified of the change.</p>
         </div>
       </div>
@@ -117,9 +117,9 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
   const resolutions = conflict.resolutions || [];
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-slate-700">
+      <div className="flex items-center gap-3 px-4 pt-12 pb-4 border-b border-border-soft">
         <button
           onClick={() => navigate(-1)}
           className="w-10 h-10 rounded-full bg-slate-card flex items-center justify-center"
@@ -128,7 +128,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
           <ArrowLeft size={18} className="text-slate-400" aria-hidden="true" />
         </button>
         <div className="flex-1">
-          <h1 className="text-white font-heading font-bold text-base leading-tight">{conflict.title}</h1>
+          <h1 className="text-text-primary font-heading font-bold text-base leading-tight">{conflict.title}</h1>
           <span className={`inline-block text-xs font-body px-2 py-0.5 rounded-full border mt-1 ${SEVERITY_COLORS[conflict.severity]}`}>
             {conflict.severity} Severity
           </span>
@@ -137,20 +137,20 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
 
       <div className="px-4 py-6 pb-32 space-y-6 max-w-lg mx-auto">
         {/* AI Explanation */}
-        <div className="bg-slate-card rounded-2xl p-4">
+          <div className="bg-slate-card border border-border-soft rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-6 h-6 bg-teal rounded-full flex items-center justify-center">
-              <span className="text-xs text-white" aria-hidden="true">🤖</span>
+              <span className="text-xs text-text-primary" aria-hidden="true">🤖</span>
             </div>
-            <span className="text-teal-accent text-xs font-body font-semibold">AI Analysis</span>
+            <span className="text-teal-deep text-xs font-body font-semibold">AI Analysis</span>
             {(isLoading || isTyping) && (
               <span className="text-slate-500 text-xs font-body animate-pulse">typing...</span>
             )}
           </div>
-          <p className="text-slate-200 text-sm font-body leading-relaxed whitespace-pre-wrap">
-            {displayedText || aiExplanation || 'Analyzing conflict...'}
-          </p>
-        </div>
+            <p className="text-text-secondary text-sm font-body leading-relaxed whitespace-pre-wrap">
+              {displayedText || aiExplanation || 'Analyzing conflict...'}
+            </p>
+          </div>
 
         {/* Affected events */}
         <div>
@@ -162,7 +162,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
                 <div key={event.id} className="bg-slate-card rounded-xl p-3 flex items-center gap-3">
                   {owner && (
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-text-primary flex-shrink-0"
                       style={{ backgroundColor: owner.avatarColor }}
                       aria-label={`Owner: ${owner.name}`}
                     >
@@ -170,7 +170,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
                     </div>
                   )}
                   <div>
-                    <p className="text-white font-body text-sm font-semibold">{event.title}</p>
+                    <p className="text-text-primary font-body text-sm font-semibold">{event.title}</p>
                     <p className="text-slate-400 text-xs font-body">{event.startTime}–{event.endTime}</p>
                   </div>
                 </div>
@@ -195,14 +195,14 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
                     className={`w-full text-left rounded-2xl p-4 border transition-colors min-h-[80px] ${
                       selectedResolution === res.id
                         ? 'border-teal bg-teal/10'
-                        : 'border-slate-600 bg-slate-card'
+                        : 'border-border-soft bg-slate-card'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-white font-body text-sm font-semibold">{res.label}</span>
+                        <span className="text-text-primary font-body text-sm font-semibold">{res.label}</span>
                         {res.isRecommended && (
-                          <span className="bg-teal/20 text-teal-accent text-xs px-2 py-0.5 rounded-full font-body">
+                          <span className="bg-teal/20 text-teal-deep text-xs px-2 py-0.5 rounded-full font-body">
                             ✨ AI Recommended
                           </span>
                         )}
@@ -223,7 +223,7 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
                       {whoActs && (
                         <span className="text-xs text-slate-400 font-body flex items-center gap-1">
                           <div
-                            className="w-4 h-4 rounded-full inline-flex items-center justify-center text-white text-xs"
+                            className="w-4 h-4 rounded-full inline-flex items-center justify-center text-text-primary text-xs"
                             style={{ backgroundColor: whoActs.avatarColor }}
                             aria-hidden="true"
                           >
@@ -242,11 +242,11 @@ Explain this scheduling conflict clearly and suggest 3 specific resolution optio
       </div>
 
       {/* Apply button */}
-      <div className="fixed bottom-0 left-0 right-0 px-4 pb-6 pt-3 bg-navy/90 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 px-4 pb-6 pt-3 bg-[#FAFAF8]/95 backdrop-blur-sm">
         <button
           onClick={handleApply}
           disabled={!selectedResolution}
-          className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-white font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
+          className="w-full bg-teal hover:bg-teal-accent disabled:opacity-40 text-text-primary font-semibold font-body py-4 rounded-2xl min-h-[56px] transition-colors"
         >
           Apply & Notify All Members
         </button>

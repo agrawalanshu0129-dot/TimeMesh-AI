@@ -47,7 +47,7 @@ export default function EventCard({ event, members, hasConflict, onEdit }: Event
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-white font-semibold text-sm font-body leading-tight">{event.title}</h3>
+              <h3 className="text-text-primary font-semibold text-sm font-body leading-tight">{event.title}</h3>
               {hasConflict && (
                 <span
                   className="flex-shrink-0 bg-red-500/20 text-red-400 text-xs px-1.5 py-0.5 rounded-full font-body flex items-center gap-1"
@@ -72,7 +72,7 @@ export default function EventCard({ event, members, hasConflict, onEdit }: Event
           <div className="flex items-center gap-2 flex-shrink-0">
             {owner && (
               <div
-                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white font-body"
+                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-text-primary font-body"
                 style={{ backgroundColor: owner.avatarColor }}
                 aria-label={`Owner: ${owner.name}`}
                 title={owner.name}
@@ -90,7 +90,7 @@ export default function EventCard({ event, members, hasConflict, onEdit }: Event
       </button>
 
       {expanded && (
-        <div className="mt-3 pt-3 border-t border-slate-700/50 space-y-2 animate-fade-in">
+        <div className="mt-3 pt-3 border-t border-border-soft/50 space-y-2 animate-fade-in">
           {event.location && (
             <div className="flex items-start gap-2">
               <MapPin size={13} className="text-teal-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
@@ -101,7 +101,7 @@ export default function EventCard({ event, members, hasConflict, onEdit }: Event
             <p className="text-slate-400 text-xs font-body leading-relaxed">{event.notes}</p>
           )}
           {event.repeat !== 'None' && (
-            <span className="inline-block bg-slate-700 text-slate-300 text-xs px-2 py-0.5 rounded-full font-body">
+            <span className="inline-block bg-[#F5F5F3] text-slate-300 text-xs px-2 py-0.5 rounded-full font-body">
               🔄 {event.repeat}
             </span>
           )}
@@ -113,7 +113,7 @@ export default function EventCard({ event, members, hasConflict, onEdit }: Event
                 return (
                   <span
                     key={mid}
-                    className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full font-body"
+                    className="text-xs bg-[#F5F5F3] text-slate-300 px-2 py-0.5 rounded-full font-body"
                   >
                     {m.name}
                   </span>

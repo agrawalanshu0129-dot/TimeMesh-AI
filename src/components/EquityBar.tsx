@@ -21,14 +21,14 @@ export default function EquityBar({ members }: EquityBarProps) {
   return (
     <div className="bg-slate-card rounded-xl p-4" aria-label="Coordination equity bar">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-white text-sm font-semibold font-body">Coordination Load</h3>
+        <h3 className="text-text-primary text-sm font-semibold font-body">Coordination Load</h3>
         <span className={`text-xs font-body px-2 py-0.5 rounded-full ${isUnequal ? 'bg-amber-500/20 text-amber-400' : 'bg-green-500/20 text-green-400'}`}>
           {isUnequal ? 'Unequal' : 'Balanced'}
         </span>
       </div>
 
       {/* Bar */}
-      <div className="relative h-6 rounded-full overflow-hidden bg-slate-700 flex" aria-hidden="true">
+      <div className="relative h-6 rounded-full overflow-hidden bg-[#F5F5F3] flex" aria-hidden="true">
         <div
           className="h-full transition-all duration-500 flex items-center justify-center"
           style={{
@@ -37,7 +37,7 @@ export default function EquityBar({ members }: EquityBarProps) {
           }}
         >
           {primaryPct > 20 && (
-            <span className="text-white text-xs font-bold font-body">{primaryPct}%</span>
+            <span className="text-text-primary text-xs font-bold font-body">{primaryPct}%</span>
           )}
         </div>
         <div
@@ -45,7 +45,7 @@ export default function EquityBar({ members }: EquityBarProps) {
           style={{ backgroundColor: secondary.avatarColor }}
         >
           {secondaryPct > 20 && (
-            <span className="text-white text-xs font-bold font-body">{secondaryPct}%</span>
+            <span className="text-text-primary text-xs font-bold font-body">{secondaryPct}%</span>
           )}
         </div>
       </div>
