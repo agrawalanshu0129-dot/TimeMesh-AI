@@ -124,12 +124,11 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('grandparent-mode', grandparentMode);
+  }, [grandparentMode]);
+
+  useEffect(() => {
     document.documentElement.classList.toggle('high-contrast', settings.accessibility.highContrast);
-    return () => {
-      document.documentElement.classList.remove('grandparent-mode');
-      document.documentElement.classList.remove('high-contrast');
-    };
-  }, [grandparentMode, settings.accessibility.highContrast]);
+  }, [settings.accessibility.highContrast]);
 
   return (
     <BrowserRouter>

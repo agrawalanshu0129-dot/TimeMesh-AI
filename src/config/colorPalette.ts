@@ -10,12 +10,12 @@ export const CATEGORY_SELECTED_COLORS: Record<Category, string> = {
 };
 
 export const CATEGORY_CARD_COLORS: Record<Category, string> = {
-  Work: 'border-[#C5CFDA] bg-[#F5F7FA]',
-  Kids: 'border-[#C5D3C5] bg-[#F5F8F5]',
-  Family: 'border-[#D9CEBF] bg-[#FAF7F2]',
-  Personal: 'border-[#CEC5D8] bg-[#F8F5FA]',
-  Social: 'border-[#C2CEDB] bg-[#F4F7FA]',
-  Fitness: 'border-[#BED2CB] bg-[#F3F8F6]',
+  Work: 'border-l-[#C5CFDA] bg-[#F5F7FA]',
+  Kids: 'border-l-[#C5D3C5] bg-[#F5F8F5]',
+  Family: 'border-l-[#D9CEBF] bg-[#FAF7F2]',
+  Personal: 'border-l-[#CEC5D8] bg-[#F8F5FA]',
+  Social: 'border-l-[#C2CEDB] bg-[#F4F7FA]',
+  Fitness: 'border-l-[#BED2CB] bg-[#F3F8F6]',
 };
 
 export const CATEGORY_CHIP_COLORS: Record<Category, string> = {

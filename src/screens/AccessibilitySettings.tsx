@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Home, PlusCircle, MessageCircle, Settings } from 'lucide-react';
 import type { GroupSettings } from '../types';
@@ -12,10 +12,6 @@ export default function AccessibilitySettings({ settings, onUpdateSettings }: Ac
   const navigate = useNavigate();
   const [s, setS] = useState<GroupSettings>(settings);
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    setS(settings);
-  }, [settings]);
 
   const updateAccessibility = (partial: Partial<GroupSettings['accessibility']>) => {
     setS(prev => ({

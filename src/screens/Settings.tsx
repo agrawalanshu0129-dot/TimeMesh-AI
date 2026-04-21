@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronRight, LogOut, Trash2 } from 'lucide-react';
 import type { GroupSettings, Member } from '../types';
@@ -23,10 +23,6 @@ export default function Settings({
   const navigate = useNavigate();
   const [s, setS] = useState<GroupSettings>(settings);
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    setS(settings);
-  }, [settings]);
 
   const update = (partial: Partial<GroupSettings>) => {
     setS(prev => ({ ...prev, ...partial }));
