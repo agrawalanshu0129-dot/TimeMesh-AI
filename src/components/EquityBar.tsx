@@ -21,7 +21,9 @@ export default function EquityBar({ members }: EquityBarProps) {
   const sortedByLoad = [...coordinatorLoad].sort((a, b) => b.pct - a.pct);
   const primary = sortedByLoad[0];
   const secondary = sortedByLoad[1];
-  const gap = primary && secondary ? Math.abs(primary.pct - secondary.pct) : 0;
+  if (!primary || !secondary) return null;
+  const gap = Math.abs(primary.pct - secondary.pct);
+  const barBackgroundColor = '#F5F5F3';
 
   const isUnequal = gap > 20;
 
@@ -37,7 +39,7 @@ export default function EquityBar({ members }: EquityBarProps) {
       {/* Percentages */}
       <div className="flex flex-wrap gap-2 mb-3">
         {coordinatorLoad.map(({ member, pct }) => (
-          <div key={`${member.id}-pct`} className="flex items-center gap-1.5 bg-[#F5F5F3] rounded-full px-2.5 py-1">
+          <div key={member.id} className="flex items-center gap-1.5 rounded-full px-2.5 py-1" style={{ backgroundColor: barBackgroundColor }}>
             <div
               className="w-2.5 h-2.5 rounded-full flex-shrink-0"
               style={{ backgroundColor: member.avatarColor }}
@@ -49,7 +51,7 @@ export default function EquityBar({ members }: EquityBarProps) {
       </div>
 
       {/* Bar */}
-      <div className="relative h-6 rounded-full overflow-hidden bg-[#F5F5F3] flex" aria-hidden="true">
+      <div className="relative h-6 rounded-full overflow-hidden flex" style={{ backgroundColor: barBackgroundColor }} aria-hidden="true">
         {coordinatorLoad.map(({ member, pct }) => (
           <div
             key={member.id}
@@ -65,7 +67,7 @@ export default function EquityBar({ members }: EquityBarProps) {
       {/* Legend */}
       <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 pb-1">
         {coordinatorLoad.map(({ member }) => (
-          <div key={`${member.id}-legend`} className="flex items-center gap-1.5 min-w-0">
+          <div key={member.id} className="flex items-center gap-1.5 min-w-0">
             <div
               className="w-3 h-3 rounded-full flex-shrink-0"
               style={{ backgroundColor: member.avatarColor }}
