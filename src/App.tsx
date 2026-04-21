@@ -131,7 +131,7 @@ export default function App() {
   }, [settings.accessibility.highContrast]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/TimeMesh-AI">
       <div className={`font-body bg-cream min-h-screen ${grandparentMode ? 'pb-20' : ''}`}>
         <Routes>
           <Route
