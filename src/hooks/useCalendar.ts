@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
 import type { CalendarEvent, Conflict, Severity } from '../types';
+import { STORAGE_KEYS, loadFromStorage, saveToStorage } from '../services/storageService';
 
-const STORAGE_KEY_EVENTS = 'timemesh_events';
-const STORAGE_KEY_CONFLICTS = 'timemesh_conflicts';
+const STORAGE_KEY_EVENTS = STORAGE_KEYS.EVENTS;
+const STORAGE_KEY_CONFLICTS = STORAGE_KEYS.CONFLICTS;
 
 function detectConflicts(events: CalendarEvent[]): Conflict[] {
   const conflicts: Conflict[] = [];
@@ -57,34 +58,20 @@ function timeToMinutes(time: string): number {
 }
 
 export function useCalendar(initialEvents: CalendarEvent[], initialConflicts: Conflict[]) {
-  const loadEvents = (): CalendarEvent[] => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY_EVENTS);
-      return stored ? JSON.parse(stored) : initialEvents;
-    } catch {
-      return initialEvents;
-    }
-  };
-
-  const loadConflicts = (): Conflict[] => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY_CONFLICTS);
-      return stored ? JSON.parse(stored) : initialConflicts;
-    } catch {
-      return initialConflicts;
-    }
-  };
-
-  const [events, setEvents] = useState<CalendarEvent[]>(loadEvents);
-  const [conflicts, setConflicts] = useState<Conflict[]>(loadConflicts);
+  const [events, setEvents] = useState<CalendarEvent[]>(
+    () => loadFromStorage(STORAGE_KEY_EVENTS, initialEvents)
+  );
+  const [conflicts, setConflicts] = useState<Conflict[]>(
+    () => loadFromStorage(STORAGE_KEY_CONFLICTS, initialConflicts)
+  );
 
   const saveEvents = useCallback((evts: CalendarEvent[]) => {
-    localStorage.setItem(STORAGE_KEY_EVENTS, JSON.stringify(evts));
+    saveToStorage(STORAGE_KEY_EVENTS, evts);
     setEvents(evts);
   }, []);
 
   const saveConflicts = useCallback((confs: Conflict[]) => {
-    localStorage.setItem(STORAGE_KEY_CONFLICTS, JSON.stringify(confs));
+    saveToStorage(STORAGE_KEY_CONFLICTS, confs);
     setConflicts(confs);
   }, []);
 

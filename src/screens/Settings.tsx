@@ -11,6 +11,7 @@ interface SettingsProps {
   currentMember: Member | null;
   onLeaveGroup: () => void;
   onUpdateMemberPhoto: (memberId: string, photoUrl?: string) => void;
+  onClearData: () => void;
 }
 
 export default function Settings({
@@ -19,10 +20,12 @@ export default function Settings({
   currentMember,
   onLeaveGroup,
   onUpdateMemberPhoto,
+  onClearData,
 }: SettingsProps) {
   const navigate = useNavigate();
   const [s, setS] = useState<GroupSettings>(settings);
   const [saved, setSaved] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const update = (partial: Partial<GroupSettings>) => {
     setS(prev => ({ ...prev, ...partial }));
@@ -224,6 +227,14 @@ export default function Settings({
           <h2 id="danger-heading" className="text-slate-400 text-xs font-body uppercase tracking-wider mb-3">Danger Zone</h2>
           <div className="bg-[#FFF3F0] border border-[#F3B9AD] rounded-2xl p-4 space-y-3">
             <button
+              onClick={() => setShowClearConfirm(true)}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FFECE7] text-[#B63E2E] text-sm font-body font-semibold min-h-[48px] border border-[#F3B9AD]"
+              aria-label="Clear all saved data and reset to defaults"
+            >
+              <Trash2 size={16} aria-hidden="true" />
+              Clear All Data
+            </button>
+            <button
               onClick={onLeaveGroup}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FFECE7] text-[#B63E2E] text-sm font-body font-semibold min-h-[48px] border border-[#F3B9AD]"
               aria-label="Leave group"
@@ -261,6 +272,43 @@ export default function Settings({
           {saved ? '✓ Saved!' : 'Save Settings'}
         </button>
       </div>
+
+      {/* Clear All Data confirmation dialog */}
+      {showClearConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="clear-confirm-title"
+        >
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl">
+            <h2 id="clear-confirm-title" className="font-heading font-bold text-lg text-text-primary mb-2">
+              Clear All Data?
+            </h2>
+            <p className="text-slate-500 font-body text-sm leading-relaxed mb-6">
+              This will permanently delete all saved events, members, settings, and chat history, and
+              reset the app to its default demo data. This action cannot be undone.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowClearConfirm(false)}
+                className="flex-1 py-3 rounded-xl border border-border-soft text-text-primary font-body font-semibold text-sm min-h-[48px]"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setShowClearConfirm(false);
+                  onClearData();
+                }}
+                className="flex-1 py-3 rounded-xl bg-[#B63E2E] text-white font-body font-semibold text-sm min-h-[48px]"
+              >
+                Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
