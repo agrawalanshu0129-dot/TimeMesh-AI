@@ -6,6 +6,16 @@ services:
     autoDeploy: true
     buildCommand: npm install && npm run build -- --base=/
     staticPublishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - path: /*
+        name: Pragma
+        value: no-cache
+      - path: /*
+        name: Expires
+        value: "0"
     routes:
       - type: rewrite
         source: /*

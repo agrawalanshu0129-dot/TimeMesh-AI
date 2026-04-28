@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "20"
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
