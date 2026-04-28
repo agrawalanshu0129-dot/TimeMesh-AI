@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import type { Member, ChatMessage, GroupSettings } from './types';
 import { useCalendar } from './hooks/useCalendar';
 import { mockEvents, mockConflicts, mockMembers, defaultSettings } from './data/mockData';
+import { STORAGE_KEYS, loadFromStorage, saveToStorage, removeFromStorage, clearAllData } from './services/storageService';
 
 import Onboarding from './screens/Onboarding';
 import Dashboard from './screens/Dashboard';
@@ -15,22 +16,6 @@ import MemberManagement from './screens/MemberManagement';
 import Settings from './screens/Settings';
 import AccessibilitySettings from './screens/AccessibilitySettings';
 import GrandparentQuickNav from './components/GrandparentQuickNav';
-
-const STORAGE_KEYS = {
-  MEMBER: 'timemesh_current_member',
-  MEMBERS: 'timemesh_members',
-  CHAT: 'timemesh_chat',
-  SETTINGS: 'timemesh_settings',
-};
-
-function loadFromStorage<T>(key: string, fallback: T): T {
-  try {
-    const val = localStorage.getItem(key);
-    return val ? JSON.parse(val) : fallback;
-  } catch {
-    return fallback;
-  }
-}
 
 function normalizeSettings(settings: GroupSettings): GroupSettings {
   return {
@@ -47,7 +32,7 @@ function normalizeSettings(settings: GroupSettings): GroupSettings {
 
 export default function App() {
   const [currentMember, setCurrentMember] = useState<Member | null>(
-    loadFromStorage(STORAGE_KEYS.MEMBER, null)
+    loadFromStorage(STORAGE_KEYS.CURRENT_MEMBER, null)
   );
   const [members, setMembers] = useState<Member[]>(
     loadFromStorage(STORAGE_KEYS.MEMBERS, mockMembers)
@@ -78,23 +63,23 @@ export default function App() {
 
   const handleSetCurrentMember = (member: Member | null) => {
     setCurrentMember(member);
-    localStorage.setItem(STORAGE_KEYS.MEMBER, JSON.stringify(member));
+    saveToStorage(STORAGE_KEYS.CURRENT_MEMBER, member);
   };
 
   const handleSetMembers = (newMembers: Member[]) => {
     setMembers(newMembers);
-    localStorage.setItem(STORAGE_KEYS.MEMBERS, JSON.stringify(newMembers));
+    saveToStorage(STORAGE_KEYS.MEMBERS, newMembers);
   };
 
   const handleUpdateMessages = (messages: ChatMessage[]) => {
     setChatMessages(messages);
-    localStorage.setItem(STORAGE_KEYS.CHAT, JSON.stringify(messages));
+    saveToStorage(STORAGE_KEYS.CHAT, messages);
   };
 
   const handleUpdateSettings = (newSettings: GroupSettings) => {
     const normalized = normalizeSettings(newSettings);
     setSettings(normalized);
-    localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(normalized));
+    saveToStorage(STORAGE_KEYS.SETTINGS, normalized);
   };
 
   const handleOnboardingComplete = (member: Member, allMembers: Member[], newSettings: GroupSettings) => {
@@ -105,7 +90,16 @@ export default function App() {
 
   const handleLeaveGroup = () => {
     handleSetCurrentMember(null);
-    localStorage.removeItem(STORAGE_KEYS.MEMBER);
+    removeFromStorage(STORAGE_KEYS.CURRENT_MEMBER);
+  };
+
+  const handleClearAllData = () => {
+    clearAllData();
+    setCurrentMember(null);
+    setMembers(mockMembers);
+    setChatMessages([]);
+    setSettings(normalizeSettings(defaultSettings));
+    resetToMockData(mockEvents, mockConflicts);
   };
 
   const handleUpdateMemberPhoto = (memberId: string, photoUrl?: string) => {
@@ -294,6 +288,7 @@ export default function App() {
                   currentMember={currentMember}
                   onLeaveGroup={handleLeaveGroup}
                   onUpdateMemberPhoto={handleUpdateMemberPhoto}
+                  onClearData={handleClearAllData}
                 />
               ) : (
                 <Navigate to="/onboarding" replace />
