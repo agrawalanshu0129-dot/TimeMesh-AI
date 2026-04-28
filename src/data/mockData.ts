@@ -7,6 +7,9 @@ const getUpcomingWeekday = (targetDay: number) => {
   const daysUntilTarget = (targetDay - currentDay + 7) % 7 || 7;
   return format(addDays(today, daysUntilTarget), 'yyyy-MM-dd');
 };
+
+const todayStr = format(today, 'yyyy-MM-dd'); 
+
 const monday = getUpcomingWeekday(1);
 const tuesday = getUpcomingWeekday(2);
 const wednesday = getUpcomingWeekday(3);
@@ -75,6 +78,38 @@ export const mockMembers: Member[] = [
 ];
 
 export const mockEvents: CalendarEvent[] = [
+  // TODAY'S EVENTS - New section at the top
+  {
+    id: 'event-today-1',
+    title: 'Morning Team Standup',
+    category: 'Work',
+    ownerId: 'member-priya',
+    date: todayStr,
+    startTime: '09:00',
+    endTime: '09:30',
+    location: 'Virtual',
+    notes: 'Daily sync with team',
+    repeat: 'Daily',
+    invitedMemberIds: ['member-jay', 'member-sia'],
+    visibility: 'Everyone',
+    conflictIds: [],
+  },
+  {
+    id: 'event-today-2',
+    title: 'Lunch with Mom',
+    category: 'Family',
+    ownerId: 'member-priya',
+    date: todayStr,
+    startTime: '12:00',
+    endTime: '13:00',
+    location: 'Coffee Shop Downtown',
+    notes: 'Catch up time',
+    repeat: 'None',
+    invitedMemberIds: ['member-maya'],
+    visibility: 'Everyone',
+    conflictIds: [],
+  },
+
   {
     id: 'event-1',
     title: "Doctor's Appointment",
