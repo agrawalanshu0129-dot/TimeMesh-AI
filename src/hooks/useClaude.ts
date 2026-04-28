@@ -160,13 +160,13 @@ function getMockResponse(userMessage: string, context: { events: CalendarEvent[]
 
   if (lower.includes('conflict')) {
     if (conflicts.length > 0) {
-      return `⚠️ I can see ${conflicts.length} conflicting events on your calendar!\n\nThe main issue is **Doctor's Appointment (2:00–3:00pm) overlapping with School Team Practice (2:30–4:00pm)** — Priya is listed as responsible for both.\n\n**Your best options:**\n1. Ask Jay to handle the school practice logistics (they're free at 2pm)\n2. Ask Maya to handle pickup instead\n\n**Action:** Tap the conflict banner on your dashboard to resolve this now.`;
+      return `⚠️ I can see ${conflicts.length} conflicting events on your calendar!\n\nThe main issue is **Doctor's Appointment (2:00–3:00pm) overlapping with School Team Practice (2:30–4:00pm)** — Priya is listed as responsible for both.\n\n**Your best options:**\n1. Ask Jay to handle the school practice logistics (they're free at 2pm)\n2. Ask Granny Maya to handle pickup instead\n\n**Action:** Tap the conflict banner on your dashboard to resolve this now.`;
     }
     return "✅ Great news — I don't see any active conflicts in your next 7 days!\n\nWant me to scan further out, or help you find a time for a new event?\n\n**Action:** Ask me 'Find time for family dinner this weekend' to get started.";
   }
 
   if (lower.includes('free') || lower.includes('available') || lower.includes('saturday')) {
-    return "Looking at everyone's schedules for Saturday...\n\n✅ **Priya:** Free all day\n✅ **Jay:** Free after 11am\n✅ **Sia:** Free all day\n⚠️ **Maya:** Has a morning routine until 10am\n✅ **Jenny:** Free all day\n\n**Best window:** Saturday 11am–6pm works for the whole family!\n\n**Action:** Tap 'Add Event' to schedule something, or ask me to create it for you.";
+    return "Looking at everyone's schedules for Saturday...\n\n✅ **Priya:** Free all day\n✅ **Jay:** Free after 11am\n✅ **Sia:** Free all day\n⚠️ **Granny Maya:** Has a morning routine until 10am\n✅ **Jenny:** Free all day\n\n**Best window:** Saturday 11am–6pm works for the whole family!\n\n**Action:** Tap 'Add Event' to schedule something, or ask me to create it for you.";
   }
 
   if (lower.includes('dinner') || lower.includes('outing') || lower.includes('hike')) {
