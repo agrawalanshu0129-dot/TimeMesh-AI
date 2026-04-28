@@ -73,7 +73,7 @@ export const mockMembers: Member[] = [
     id: 'member-chloe',
     name: 'Chloé (Neighbour)',
     role: 'Member',
-    avatarColor: '#14B8A6',
+    avatarColor: '#0D9488',
     initials: 'CH',
     contributionScore: 3,
     timezone: 'America/Los_Angeles',
@@ -317,11 +317,11 @@ export const mockConflicts: Conflict[] = [
   },
   {
     id: 'conflict-4',
-    title: "Priya's Double Booking",
+    title: "Priya's Double Booking - Pick up Sia",
     severity: 'High',
     eventIds: ['event-10', 'event-11'],
     aiExplanation:
-      "Priya is scheduled to pick up Sia from school at 3 PM but also has another commitment. Consider asking Chloé (Neighbour) to pick up Sia instead, as she's available and nearby.",
+      "Priya has conflicting schedules at 3 PM. She's scheduled to pick up Sia from school but also has a work commitment. We recommend asking Chloé (Neighbour) to pick up Sia instead, as she's available and nearby.",
     resolutions: [
       {
         id: 'res-4a',

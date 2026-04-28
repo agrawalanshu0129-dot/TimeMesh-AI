@@ -17,6 +17,10 @@ import Settings from './screens/Settings';
 import AccessibilitySettings from './screens/AccessibilitySettings';
 import GrandparentQuickNav from './components/GrandparentQuickNav';
 
+// Bump this constant whenever mock data changes so stale localStorage caches
+// are automatically cleared on the next page load.
+const DATA_VERSION = '3';
+
 function normalizeSettings(settings: GroupSettings): GroupSettings {
   return {
     ...settings,
@@ -53,11 +57,20 @@ export default function App() {
     resetToMockData,
   } = useCalendar(mockEvents, mockConflicts);
 
-  // Initialize mock data if none exists
+  // Initialize mock data if none exists, or clear stale cache when DATA_VERSION changes
   useEffect(() => {
-    const storedEvents = localStorage.getItem('timemesh_events');
-    if (!storedEvents) {
+    const storedVersion = localStorage.getItem('timemesh_data_version');
+    if (storedVersion !== DATA_VERSION) {
+      // Clear all stored data so fresh mock data (and updated member colours) are used
+      clearAllData();
+      localStorage.removeItem('timemesh_data_version');
       resetToMockData(mockEvents, mockConflicts);
+      localStorage.setItem('timemesh_data_version', DATA_VERSION);
+    } else {
+      const storedEvents = localStorage.getItem('timemesh_events');
+      if (!storedEvents) {
+        resetToMockData(mockEvents, mockConflicts);
+      }
     }
   }, [resetToMockData]);
 
