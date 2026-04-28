@@ -8,6 +8,7 @@ const getUpcomingWeekday = (targetDay: number) => {
   return format(addDays(today, daysUntilTarget), 'yyyy-MM-dd');
 };
 const monday = getUpcomingWeekday(1);
+const tuesday = getUpcomingWeekday(2);
 const wednesday = getUpcomingWeekday(3);
 const thursday = getUpcomingWeekday(4);
 const friday = getUpcomingWeekday(5);
@@ -66,6 +67,15 @@ export const mockMembers: Member[] = [
     avatarColor: '#EC4899',
     initials: 'JN',
     contributionScore: 8,
+    timezone: 'America/Los_Angeles',
+  },
+  {
+    id: 'member-chloe',
+    name: 'Chloé (Neighbour)',
+    role: 'Member',
+    avatarColor: '#14B8A6',
+    initials: 'CH',
+    contributionScore: 5,
     timezone: 'America/Los_Angeles',
   },
 ];
@@ -206,6 +216,36 @@ export const mockEvents: CalendarEvent[] = [
     visibility: 'Everyone',
     conflictIds: [],
   },
+  {
+    id: 'event-10',
+    title: 'Pick up Sia from School',
+    category: 'Kids',
+    ownerId: 'member-priya',
+    date: tuesday,
+    startTime: '15:00',
+    endTime: '16:00',
+    location: "Sia's School",
+    notes: 'Pick up Sia and bring her home',
+    repeat: 'None',
+    invitedMemberIds: ['member-sia'],
+    visibility: 'Everyone',
+    conflictIds: ['conflict-4'],
+  },
+  {
+    id: 'event-11',
+    title: 'Work Meeting',
+    category: 'Work',
+    ownerId: 'member-priya',
+    date: tuesday,
+    startTime: '15:00',
+    endTime: '16:00',
+    location: 'Downtown Office',
+    notes: 'Important team sync',
+    repeat: 'None',
+    invitedMemberIds: [],
+    visibility: 'Everyone',
+    conflictIds: ['conflict-4'],
+  },
 ];
 
 export const mockConflicts: Conflict[] = [
@@ -269,6 +309,43 @@ export const mockConflicts: Conflict[] = [
         detail: 'Begin with Priya and Jay, then add Granny Maya post-appointment.',
         effort: 'Low',
         impact: 'Granny Maya misses early updates but no reschedule needed.',
+        whoActsId: 'member-jay',
+      },
+    ],
+    isResolved: false,
+    detectedAt: new Date().toISOString(),
+  },
+  {
+    id: 'conflict-4',
+    title: "Priya's Double Booking",
+    severity: 'High',
+    eventIds: ['event-10', 'event-11'],
+    aiExplanation:
+      "Priya is scheduled to pick up Sia from school at 3 PM but also has another commitment. Consider asking Chloé (Neighbour) to pick up Sia instead, as she's available and nearby.",
+    resolutions: [
+      {
+        id: 'res-4a',
+        label: 'Ask Chloé (Neighbour) to pick up Sia',
+        detail: 'Chloé lives nearby and is available at 3 PM — a great alternative for the school pickup.',
+        effort: 'Low',
+        impact: 'Priya attends the Work Meeting; Sia is still picked up on time.',
+        whoActsId: 'member-chloe',
+        isRecommended: true,
+      },
+      {
+        id: 'res-4b',
+        label: "Reschedule Priya's Work Meeting",
+        detail: 'Move the Work Meeting to a different time slot so Priya can do the pickup.',
+        effort: 'Med',
+        impact: 'Priya does the pickup; Work Meeting needs rescheduling.',
+        whoActsId: 'member-priya',
+      },
+      {
+        id: 'res-4c',
+        label: 'Ask Jay to pick up Sia',
+        detail: 'Jay can handle the school pickup if available.',
+        effort: 'Low',
+        impact: 'Jay covers pickup; verify Jay is free at 3 PM.',
         whoActsId: 'member-jay',
       },
     ],
