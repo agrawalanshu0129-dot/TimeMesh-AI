@@ -51,10 +51,10 @@ export const mockMembers: Member[] = [
   },
   {
     id: 'member-maya',
-    name: 'Maya',
+    name: 'Granny Maya',
     role: 'Member',
     avatarColor: '#A855F7',
-    initials: 'MY',
+    initials: 'GM',
     contributionScore: 5,
     timezone: 'America/Los_Angeles',
     emergencyContact: '+1 (415) 555-0100',
@@ -124,7 +124,7 @@ export const mockEvents: CalendarEvent[] = [
     date: wednesday,
     startTime: '18:00',
     endTime: '20:00',
-    location: "Maya's house, 45 Oak Ave",
+    location: "Granny Maya's house, 45 Oak Ave",
     notes: 'Bring dessert',
     repeat: 'None',
     invitedMemberIds: ['member-priya', 'member-sia', 'member-maya'],
@@ -148,7 +148,7 @@ export const mockEvents: CalendarEvent[] = [
   },
   {
     id: 'event-6',
-    title: 'Maya Check-in Call',
+    title: 'Granny Maya Check-in Call',
     category: 'Family',
     ownerId: 'member-priya',
     date: friday,
@@ -163,7 +163,7 @@ export const mockEvents: CalendarEvent[] = [
   },
   {
     id: 'event-7',
-    title: "Maya's Appointment",
+    title: "Granny Maya's Appointment",
     category: 'Personal',
     ownerId: 'member-maya',
     date: friday,
@@ -228,8 +228,8 @@ export const mockConflicts: Conflict[] = [
       },
       {
         id: 'res-1b',
-        label: 'Ask Maya for backup support',
-        detail: 'Maya can be the fallback pickup if traffic delays Priya.',
+        label: 'Ask Granny Maya for backup support',
+        detail: 'Granny Maya can be the fallback pickup if traffic delays Priya.',
         effort: 'Low',
         impact: 'Requires one confirmation call but keeps both events covered.',
         whoActsId: 'member-maya',
@@ -248,11 +248,11 @@ export const mockConflicts: Conflict[] = [
   },
   {
     id: 'conflict-3',
-    title: "Maya's Appointment ↔ Check-in Call",
+    title: "Granny Maya's Appointment ↔ Check-in Call",
     severity: 'Medium',
     eventIds: ['event-6', 'event-7'],
     aiExplanation:
-      "Maya's appointment is from 2:00–3:00pm Friday, but the family check-in call starts at 2:30pm and includes Maya, creating a 30-minute overlap.",
+      "Granny Maya's appointment is from 2:00–3:00pm Friday, but the family check-in call starts at 2:30pm and includes Granny Maya, creating a 30-minute overlap.",
     resolutions: [
       {
         id: 'res-3a',
@@ -265,10 +265,10 @@ export const mockConflicts: Conflict[] = [
       },
       {
         id: 'res-3b',
-        label: 'Dial in without Maya for first 30 mins',
-        detail: 'Begin with Priya and Jay, then add Maya post-appointment.',
+        label: 'Dial in without Granny Maya for first 30 mins',
+        detail: 'Begin with Priya and Jay, then add Granny Maya post-appointment.',
         effort: 'Low',
-        impact: 'Maya misses early updates but no reschedule needed.',
+        impact: 'Granny Maya misses early updates but no reschedule needed.',
         whoActsId: 'member-jay',
       },
     ],
