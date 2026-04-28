@@ -19,7 +19,7 @@ import GrandparentQuickNav from './components/GrandparentQuickNav';
 
 // Bump this constant whenever mock data changes so stale localStorage caches
 // are automatically cleared on the next page load.
-const DATA_VERSION = '3';
+const DATA_VERSION = '4';
 
 function normalizeSettings(settings: GroupSettings): GroupSettings {
   return {
